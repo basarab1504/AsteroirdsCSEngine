@@ -4,7 +4,6 @@ namespace Asteroids
 {
     public class Asteroid : GameObject
     {
-        public float Speed { get; set; }
         public Vector3 Direction { get; set; }
 
         public override void Start()
@@ -15,7 +14,7 @@ namespace Asteroids
 
         public override void Update()
         {
-            Transform.Position += Direction * Speed * Game.DeltaTime;
+            Move(Direction * Speed * Game.DeltaTime);
         }
 
         private void PushRandom()

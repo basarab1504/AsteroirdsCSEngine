@@ -6,7 +6,6 @@ namespace Asteroids
     public class Ship : GameObject
     {
         private Gun Gun { get; set; }
-        public float Speed { get; set; }
         public Vector3 Direction { get; set; }
 
         // public void AddGun(Gun gun)
@@ -41,11 +40,11 @@ namespace Asteroids
             //     Direction = new Vector3(0, -1, 0);
             //сделать ввод с клавы
 
-            if (new Random().NextDouble() > 0.7f)
+            if (new Random().NextDouble() > 0.99f)
                     Gun.Shoot(Direction);
                 // Direction = Vector3.Rotate(Direction, 45);
 
-            Transform.Position += Direction * Speed * Game.DeltaTime;
+            Move(Direction * Speed * Game.DeltaTime);
             // Transform.Position += Direction * Speed * Game.DeltaTime;
         }
     }

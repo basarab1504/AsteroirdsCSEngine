@@ -8,6 +8,7 @@ namespace Asteroids
         public event Action<bool> OnActiveStateChange;
 
         private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
+        public IEnumerable<Component> Components => components.Values;
         private Component parent;
         private bool active;
 

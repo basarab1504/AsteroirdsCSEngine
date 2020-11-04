@@ -22,4 +22,6 @@ public class UnityAsteroidFactory : UnityFactory<Asteroid>
         r.Symbol = 'A';
         return a;
     }
+
+
 }

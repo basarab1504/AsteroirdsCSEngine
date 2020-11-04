@@ -5,11 +5,13 @@ namespace Asteroids
     public class Ammo : GameObject, IPoolable
     {
         private Vector3 direction;
+        private float actualLifetime;
         public float Lifetime { get; set; }
 
         public override void Start()
         {
             base.Start();
+            actualLifetime = Lifetime;
             SetActive(false);
         }
 
@@ -21,18 +23,20 @@ namespace Asteroids
 
         public override void Update()
         {
-            Lifetime--;
+            actualLifetime--;
+            if (actualLifetime <= 0)
+                SetActive(false);
             Transform.Position += direction * Game.DeltaTime;
         }
 
         public bool InUse()
         {
-            return Active && Lifetime > 0;
+            return Active && actualLifetime > 0;
         }
 
         public void Reset()
         {
-            // Transform.Position = parent.GetComponent<Transform>().Position;
+            actualLifetime = Lifetime;
             SetActive(true);
         }
     }

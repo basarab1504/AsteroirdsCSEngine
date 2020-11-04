@@ -27,7 +27,7 @@ public class UnityShipFactory : UnityFactory<Ship>
 
         var p = a.AddComponent<Gun>();
         p.AmmoBox = am;
-        p.Force = 3;
+        p.Force = 6;
 
         var r = a.AddComponent<Render>();
         r.Symbol = 'S';

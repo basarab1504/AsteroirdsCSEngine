@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Asteroids
 {
@@ -19,11 +20,13 @@ namespace Asteroids
             SetActive(true);
         }
 
-        public override void Update()
+        public float Speed { get; set; }
+
+        public void Move(Vector3 direction)
         {
-            base.Update();
-            if (Parent != null && Parent is GameObject)
-                Transform.Position += Parent.GetComponent<Transform>().Position;
+            Transform.Position += direction;
+            foreach (var child in Components.OfType<GameObject>())
+                child.Move(direction);
         }
     }
 }
