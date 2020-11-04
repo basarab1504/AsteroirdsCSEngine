@@ -27,6 +27,11 @@ namespace Asteroids
             return matrix;
         }
 
+        public static float Magnitude(Vector3 v)
+        {
+            return (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
+        }
+
         public static Vector3 Rotate(Vector3 v, double degrees)
         {
             return RotateRadians(v, degrees * DegToRad);

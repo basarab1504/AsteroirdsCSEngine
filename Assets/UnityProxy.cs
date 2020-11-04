@@ -16,6 +16,9 @@ public class UnityProxy : MonoBehaviour
 
         game = new Game();
         game.Init(new Asteroids.Vector3(10, 10, 0), targetFramerate);
+        game.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.Bullet, Layer.EnemyShip });
+        game.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Bullet });
+        game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.Bullet });
 
         var asteroidSpawner = Game.Create<CooldownSpawner<Asteroid>>();
         asteroidSpawner.Transform.Scale = new Asteroids.Vector3(10, 10, 0);

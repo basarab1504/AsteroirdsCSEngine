@@ -14,6 +14,7 @@ namespace Asteroids
         public static float Time => time;
         public static float DeltaTime => 1f / framerate;
 
+        public Dictionary<Layer, List<Layer>> LayerSettings { get; set; } = new Dictionary<Layer, List<Layer>>();
         private static List<Component> objects = new List<Component>();
         private static List<Component> ActiveObjects => objects.FindAll(x => x.Active);
         private static List<Component> toAdd = new List<Component>();
@@ -24,7 +25,7 @@ namespace Asteroids
         {
             var created = new T();
             toAdd.Add(created);
-            created.Awake();
+            created.OnCreate();
             return created;
         }
 
@@ -69,12 +70,14 @@ namespace Asteroids
             foreach (GameObject go in ActiveObjects.OfType<GameObject>())
                 clamper.Clamp(go);
 
+
             Collision();
 
             // Render();
 
             foreach (var u in ActiveObjects)
                 u.Update();
+
 
             foreach (var de in toDestroy)
                 objects.Remove(de);
@@ -89,9 +92,13 @@ namespace Asteroids
 
         public void Collision()
         {
-            foreach (Collider c in ActiveObjects.OfType<Collider>())
+            foreach (Collider a in ActiveObjects.OfType<Collider>())
             {
-                //collision check
+                foreach (Collider b in ActiveObjects.OfType<Collider>().Where(x => x != a))
+                {
+                    if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer))
+                        b.Process(a);
+                }
             }
         }
 

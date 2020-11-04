@@ -11,6 +11,7 @@ public class UnityAmmoFactory : UnityFactory<Ammo>
     {
         var a = Game.Create<Ammo>();
         var c = a.AddComponent<Collider>();
+        c.Transform.Scale = new Vector3(1, 1, 0);
         c.CollisionLayer = Layer.Bullet;
         c.OnCollision += a.Destroy;
 

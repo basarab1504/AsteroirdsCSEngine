@@ -5,6 +5,7 @@ namespace Asteroids
     public class Asteroid : GameObject
     {
         public Vector3 Direction { get; set; }
+        public float Speed { get; set; }
 
         public override void Start()
         {

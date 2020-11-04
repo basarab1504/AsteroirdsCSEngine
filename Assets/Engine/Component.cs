@@ -6,6 +6,7 @@ namespace Asteroids
     public abstract class Component
     {
         public event Action<bool> OnActiveStateChange;
+        public event Action OnDestroy;
 
         private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
         public IEnumerable<Component> Components => components.Values;
@@ -18,23 +19,23 @@ namespace Asteroids
         public void SetActive(bool value)
         {
             active = value;
+
             foreach (var c in components.Values)
                 c.SetActive(value);
-                
+
             if (OnActiveStateChange != null)
                 OnActiveStateChange(active);
         }
 
         //для инициализаций начальных чтобы к иниц можно было обращаться (создание - здесь)
-        public virtual void Awake()
+        public virtual void OnCreate()
         {
-
+            SetActive(true);
         }
 
         //для инициализации созданных (создание компонентов - не здесь)
         public virtual void Start()
         {
-
         }
 
         public virtual void Update()
@@ -69,8 +70,9 @@ namespace Asteroids
             {
                 component.Value.parent = null;
                 Game.Destroy(component.Value);
-                components.Remove(component.Key);
             }
+            components.Clear();
+            OnDestroy();
             Game.Destroy(this);
         }
     }

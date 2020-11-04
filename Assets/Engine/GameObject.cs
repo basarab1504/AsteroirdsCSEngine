@@ -8,19 +8,16 @@ namespace Asteroids
     {
         public Transform Transform { get; set; }
 
-        public override void Awake()
+        public override void OnCreate()
         {
-            base.Awake();
+            base.OnCreate();
             Transform = AddComponent<Transform>();
         }
 
-        public override void Start()
+        public void Rotate(float angle)
         {
-            base.Start();
-            SetActive(true);
+            Transform.Rotation = Vector3.Rotate(Transform.Rotation, angle);
         }
-
-        public float Speed { get; set; }
 
         public void Move(Vector3 direction)
         {

@@ -7,6 +7,19 @@ namespace Asteroids
     {
         public Pool<Ammo> AmmoBox { get; set; }
         public float Force { get; set; }
+        public int BulletCount { get; set; }
+
+        public override void Start()
+        {
+            base.Start();
+            AmmoBox = GetComponent<Pool<Ammo>>();
+        }
+
+        public void SetAmmo(IFactory<Ammo> factory)
+        {
+            AmmoBox.Factory = factory;
+            AmmoBox.RebuildPool(BulletCount);
+        }
 
         public void Shoot(Vector3 direction)
         {

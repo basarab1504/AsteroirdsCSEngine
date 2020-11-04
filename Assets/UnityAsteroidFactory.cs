@@ -11,6 +11,7 @@ public class UnityAsteroidFactory : UnityFactory<Asteroid>
     {
         var a = Game.Create<Asteroid>();
         var c = a.AddComponent<Collider>();
+        c.Transform.Scale = new Vector3(1, 1, 0);
         c.CollisionLayer = Layer.Asteroid;
         c.OnCollision += a.Destroy;
 
