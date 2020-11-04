@@ -93,49 +93,53 @@ namespace Asteroids
 
         public void Collision()
         {
+            //лучше for
             foreach (Collider a in ActiveObjects.OfType<Collider>())
             {
                 foreach (Collider b in ActiveObjects.OfType<Collider>().Where(x => x != a))
                 {
                     if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer))
+                    {
+                        a.Process(b);
                         b.Process(a);
+                    }
                 }
             }
         }
 
-        public void Render()
-        {
-            char[,] matrix = new char[(int)clamper.AreaSize.X, (int)clamper.AreaSize.X];
+        // public void Render()
+        // {
+        //     char[,] matrix = new char[(int)clamper.AreaSize.X, (int)clamper.AreaSize.X];
 
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    matrix[i, j] = '-';
-                }
-            }
+        //     for (int i = 0; i < matrix.GetLength(0); i++)
+        //     {
+        //         for (int j = 0; j < matrix.GetLength(1); j++)
+        //         {
+        //             matrix[i, j] = '-';
+        //         }
+        //     }
 
-            int centerX = (int)Math.Ceiling(clamper.AreaSize.X * 0.5f) - 1;
-            int centerY = (int)Math.Ceiling(clamper.AreaSize.Y * 0.5f) - 1;
+        //     int centerX = (int)Math.Ceiling(clamper.AreaSize.X * 0.5f) - 1;
+        //     int centerY = (int)Math.Ceiling(clamper.AreaSize.Y * 0.5f) - 1;
 
-            foreach (Render r in ActiveObjects.OfType<Render>())
-            {
-                int x = centerX + (int)Math.Ceiling(r.Parent.GetComponent<Transform>().Position.X * 0.5f);
-                int y = centerY + (int)Math.Ceiling(r.Parent.GetComponent<Transform>().Position.Y * 0.5f);
-                matrix[y, x] = r.Symbol;
-                Console.WriteLine(r.Symbol + " G" + r.Parent.GetComponent<Transform>().Position.X + " " + r.Parent.GetComponent<Transform>().Position.Y + " | " + "S" + x + " " + y);
-            }
+        //     foreach (Render r in ActiveObjects.OfType<Render>())
+        //     {
+        //         int x = centerX + (int)Math.Ceiling(r.Parent.GetComponent<Transform>().Position.X * 0.5f);
+        //         int y = centerY + (int)Math.Ceiling(r.Parent.GetComponent<Transform>().Position.Y * 0.5f);
+        //         matrix[y, x] = r.Symbol;
+        //         Console.WriteLine(r.Symbol + " G" + r.Parent.GetComponent<Transform>().Position.X + " " + r.Parent.GetComponent<Transform>().Position.Y + " | " + "S" + x + " " + y);
+        //     }
 
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write(matrix[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
+        //     for (int i = 0; i < matrix.GetLength(0); i++)
+        //     {
+        //         for (int j = 0; j < matrix.GetLength(1); j++)
+        //         {
+        //             Console.Write(matrix[i, j] + " ");
+        //         }
+        //         Console.WriteLine();
+        //     }
 
-            Console.WriteLine("=========");
-        }
+        //     Console.WriteLine("=========");
+        // }
     }
 }

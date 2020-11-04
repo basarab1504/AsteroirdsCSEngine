@@ -22,7 +22,6 @@ public class UnityShipFactory : UnityFactory<Ship>
         a.Speed = 1;
         a.Direction = new Vector3(1, 0, 0);
 
-
         var p = a.AddComponent<Gun>();
         var am = p.AddComponent<Pool<Ammo>>();
         p.BulletCount = 3;

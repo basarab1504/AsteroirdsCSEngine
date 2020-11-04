@@ -15,7 +15,7 @@ public class UnityAsteroidFactory : UnityFactory<Asteroid>
         c.CollisionLayer = Layer.Asteroid;
         c.OnCollision += a.Destroy;
 
-        a.Transform.Scale = new Vector3(4, 4, 0);
+        a.Transform.Scale = new Vector3(1, 1, 0);
         a.Speed = 1;
         a.Direction = new Vector3(0, 1, 0);
 

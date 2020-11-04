@@ -36,7 +36,7 @@ namespace Asteroids
         //для инициализации созданных (создание компонентов - не здесь)
         public virtual void Start()
         {
-            
+
         }
 
         public virtual void Update()
@@ -46,7 +46,9 @@ namespace Asteroids
 
         public T GetComponent<T>() where T : Component
         {
-            return (T)components[typeof(T)];
+            if (components.ContainsKey(typeof(T)))
+                return (T)components[typeof(T)];
+            return null;
         }
 
         public T AddComponent<T>() where T : Component, new()

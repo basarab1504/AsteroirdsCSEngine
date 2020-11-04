@@ -22,7 +22,7 @@ public class UnityProxy : MonoBehaviour
 
         var asteroidSpawner = Game.Create<CooldownSpawner<Asteroid>>();
         asteroidSpawner.Transform.Scale = new Asteroids.Vector3(10, 10, 0);
-        asteroidSpawner.Cooldown = 100;
+        asteroidSpawner.Cooldown = 50;
         asteroidSpawner.Factory = GetComponent<UnityAsteroidFactory>();
 
         var shipSpawner = Game.Create<Spawner<Ship>>();
