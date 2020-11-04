@@ -14,6 +14,7 @@ public class UnityObserver : MonoBehaviour
     {
         asteroidsObject.OnActiveStateChange += x => gameObject.SetActive(x);
         asteroidsObject.OnDestroy += () => gameObject.SetActive(false);
+        transform.position = new UnityEngine.Vector3(asteroidsObject.Transform.Position.X, asteroidsObject.Transform.Position.Y, asteroidsObject.Transform.Position.Z);
     }
 
     // Update is called once per frame

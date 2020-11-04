@@ -30,12 +30,13 @@ namespace Asteroids
         //для инициализаций начальных чтобы к иниц можно было обращаться (создание - здесь)
         public virtual void OnCreate()
         {
-            SetActive(true);
+            // SetActive(true);
         }
 
         //для инициализации созданных (создание компонентов - не здесь)
         public virtual void Start()
         {
+            
         }
 
         public virtual void Update()

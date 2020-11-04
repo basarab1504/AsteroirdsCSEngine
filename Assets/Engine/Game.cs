@@ -57,6 +57,7 @@ namespace Asteroids
             foreach (var i in toAdd)
             {
                 toStart.Add(i);
+                i.SetActive(true);
             }
             toAdd.Clear();
 
