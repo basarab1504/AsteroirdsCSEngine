@@ -7,6 +7,7 @@ namespace Asteroids
         private Vector3 position;
         public Vector3 Position
         {
+            //мерзко и ужасно
             get => position;
             set
             {

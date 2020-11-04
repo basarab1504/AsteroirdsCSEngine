@@ -5,17 +5,16 @@ using Asteroids;
 using Collider = Asteroids.Collider;
 using Vector3 = Asteroids.Vector3;
 
-public class UnityAmmoFactory : UnityFactory<Ammo>
+public class UnityLaserAmmoFactory : UnityFactory<Ammo>
 {
     public override Ammo UnityCreate()
     {
         var a = Game.Create<Ammo>();
         var c = a.AddComponent<Collider>();
-        c.Transform.Scale = new Vector3(0.4f, 0.4f, 0);
+        c.Transform.Scale = new Vector3(0.2f, 0.2f, 0);
         c.CollisionLayer = Layer.Bullet;
-        c.OnCollision += a.Destroy;
 
-        a.Transform.Scale = new Vector3(0.4f, 0.4f, 0);
+        a.Transform.Scale = new Vector3(0.2f, 0.2f, 0);
         a.Lifetime = 100;
         var r = a.AddComponent<Render>();
         r.Symbol = 'B';

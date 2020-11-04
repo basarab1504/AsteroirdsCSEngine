@@ -15,7 +15,8 @@ namespace Asteroids
             if (sizeSum.X >= Vector3.Magnitude(dif) || sizeSum.Y >= Vector3.Magnitude(dif))
             {
                 UnityEngine.Debug.Log(Parent);
-                OnCollision();
+                if (OnCollision != null)
+                    OnCollision();
             }
         }
     }

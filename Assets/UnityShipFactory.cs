@@ -9,6 +9,9 @@ public class UnityShipFactory : UnityFactory<Ship>
 {
     [SerializeField]
     private UnityAmmoFactory factory;
+    [SerializeField]
+    private UnityLaserAmmoFactory laserFactory;
+
 
     public override Ship UnityCreate()
     {
@@ -26,7 +29,7 @@ public class UnityShipFactory : UnityFactory<Ship>
         var am = p.AddComponent<Pool<Ammo>>();
         p.BulletCount = 3;
         p.AmmoBox = am;
-        p.SetAmmo(factory);
+        p.SetAmmo(laserFactory);
         p.Force = 6;
 
         var r = a.AddComponent<Render>();
