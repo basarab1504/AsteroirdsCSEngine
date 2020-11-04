@@ -6,6 +6,8 @@ namespace Asteroids
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
 
+        public Vector3 Up => Rotation - Position;
+
         public override void Awake()
         {
             Position = new Vector3();

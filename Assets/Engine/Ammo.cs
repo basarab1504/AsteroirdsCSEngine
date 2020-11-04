@@ -4,7 +4,6 @@ namespace Asteroids
 {
     public class Ammo : GameObject, IPoolable
     {
-        private float speed = 1;
         private Vector3 direction;
         public float Lifetime { get; set; }
 
@@ -23,7 +22,7 @@ namespace Asteroids
         public override void Update()
         {
             Lifetime--;
-            Transform.Position += direction * speed;
+            Transform.Position += direction * Game.DeltaTime;
         }
 
         public bool InUse()

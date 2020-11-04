@@ -18,7 +18,8 @@ public class UnityObserver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(asteroidsObject.Transform.Position.X + " " + asteroidsObject.Transform.Position.Y + " " + asteroidsObject.Transform.Position.Z);
+        // if (asteroidsObject is Ship)
+            // Debug.Log(asteroidsObject.Transform.Position.X + " " + asteroidsObject.Transform.Position.Y + " " + asteroidsObject.GetComponent<Gun>().Transform.Position.X + " " + asteroidsObject.GetComponent<Gun>().Transform.Position.Y);
         transform.position = new UnityEngine.Vector3(asteroidsObject.Transform.Position.X, asteroidsObject.Transform.Position.Y, asteroidsObject.Transform.Position.Z);
     }
 }

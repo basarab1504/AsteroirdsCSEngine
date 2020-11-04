@@ -22,8 +22,8 @@ namespace Asteroids
         public override void Update()
         {
             base.Update();
-            if (Parent != null && Parent is GameObject && Parent.GetComponent<Transform>().Position == Transform.Position)
-                Transform.Position = Parent.GetComponent<Transform>().Position;
+            if (Parent != null && Parent is GameObject)
+                Transform.Position += Parent.GetComponent<Transform>().Position;
         }
     }
 }

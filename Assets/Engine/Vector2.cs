@@ -1,7 +1,11 @@
+using System;
+
 namespace Asteroids
 {
     public struct Vector3
     {
+        private const double DegToRad = Math.PI / 180;
+
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
@@ -11,6 +15,27 @@ namespace Asteroids
             X = x;
             Y = y;
             Z = z;
+        }
+
+        public static float[,] RotationMatrix(double radians)
+        {
+            float[,] matrix = new float[2, 2];
+            matrix[0, 0] = (float)Math.Cos(radians);
+            matrix[0, 1] = -(float)Math.Sin(radians);
+            matrix[1, 0] = (float)Math.Sin(radians);
+            matrix[1, 1] = (float)Math.Cos(radians);
+            return matrix;
+        }
+
+        public static Vector3 Rotate(Vector3 v, double degrees)
+        {
+            return RotateRadians(v, degrees * DegToRad);
+        }
+
+        public static Vector3 RotateRadians(Vector3 v, double radians)
+        {
+            var rotaionMatrix = RotationMatrix(radians);
+            return new Vector3(v.X * rotaionMatrix[0, 0] + v.Y * rotaionMatrix[0, 1], v.X * rotaionMatrix[1, 0] + v.Y * rotaionMatrix[1, 1], 0);
         }
 
         public static Vector3 operator +(Vector3 a, Vector3 b)

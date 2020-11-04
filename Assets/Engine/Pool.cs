@@ -14,8 +14,6 @@ namespace Asteroids
             poolables = new List<T>(size);
             for (; size > 0; size--)
             {
-                var created = Factory.Create();
-                // created.Reset();
                 poolables.Add(Factory.Create());
             }
         }

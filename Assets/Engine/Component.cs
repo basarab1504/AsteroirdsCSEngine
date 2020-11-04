@@ -19,7 +19,9 @@ namespace Asteroids
             active = value;
             foreach (var c in components.Values)
                 c.SetActive(value);
-            OnActiveStateChange(active);
+                
+            if (OnActiveStateChange != null)
+                OnActiveStateChange(active);
         }
 
         //для инициализаций начальных чтобы к иниц можно было обращаться (создание - здесь)

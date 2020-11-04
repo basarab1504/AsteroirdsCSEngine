@@ -23,12 +23,11 @@ public class UnityShipFactory : UnityFactory<Ship>
 
         var am = a.AddComponent<Pool<Ammo>>();
         am.Factory = factory;
-        am.RebuildPool(5);
+        am.RebuildPool(3);
 
         var p = a.AddComponent<Gun>();
         p.AmmoBox = am;
-        p.Force = 1;
-
+        p.Force = 3;
 
         var r = a.AddComponent<Render>();
         r.Symbol = 'S';

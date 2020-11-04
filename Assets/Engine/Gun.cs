@@ -8,12 +8,13 @@ namespace Asteroids
         public Pool<Ammo> AmmoBox { get; set; }
         public float Force { get; set; }
 
-        public void Shoot()
+        public void Shoot(Vector3 direction)
         {
             Ammo ammo;
             if (AmmoBox.TryGetPoolable(out ammo))
             {
-                ammo.Shoot(new Vector3(0, 1, 0) * Force);
+                ammo.Transform.Position = Transform.Position;
+                ammo.Shoot(direction * Force);
             }
             // if (currentCapacity > 0)
             // {
