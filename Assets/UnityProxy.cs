@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Asteroids;
 
@@ -20,10 +19,10 @@ public class UnityProxy : MonoBehaviour
         Game.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Bullet });
         Game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.Bullet });
 
-        // var asteroidSpawner = Game.Create<CooldownSpawner<Asteroid>>();
-        // asteroidSpawner.Transform.Scale = new Asteroids.Vector3(10, 10, 0);
-        // asteroidSpawner.Cooldown = 50;
-        // asteroidSpawner.Factory = GetComponent<UnityAsteroidFactory>();
+        var asteroidSpawner = Game.Create<CooldownSpawner<Asteroid>>();
+        asteroidSpawner.Transform.Scale = new Vector2(10, 10);
+        asteroidSpawner.Cooldown = 50;
+        asteroidSpawner.Factory = GetComponent<UnityAsteroidFactory>();
 
         // var enemyShipSpawner = Game.Create<CooldownSpawner<Ship>>();
         // enemyShipSpawner.Transform.Scale = new Asteroids.Vector3(10, 10, 0);

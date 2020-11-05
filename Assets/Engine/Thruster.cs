@@ -23,7 +23,8 @@ namespace Asteroids
         {
             base.Update();
             Velocity *= LinearDrag;
-            Parent.GetComponent<Transform>().Position += Velocity;
+            if (Parent != null)
+                Parent.GetComponent<Transform>().Position += Velocity;
         }
     }
 }

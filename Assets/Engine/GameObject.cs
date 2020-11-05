@@ -14,7 +14,7 @@ namespace Asteroids
 
         public void Rotate(float angle)
         {
-            Transform.Rotation = Vector3.Rotate(Transform.Rotation, angle);
+            // Transform.Rotation = Vector3.Rotate(Transform.Rotation, angle);
         }
 
         public void Move(Vector2 direction)
