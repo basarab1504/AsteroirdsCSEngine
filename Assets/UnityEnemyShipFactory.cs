@@ -9,10 +9,13 @@ public class UnityEnemyShipFactory : UnityFactory<Ship>
 
     public override Ship UnityCreate()
     {
-        var a = Game.Create<Ship>();
+        var a = Game.Create<EnemyShip>();
+        a.VisibilityRadius = 100;
+        a.VisibilityAngle = 45;
+        a.KeepDistance = 3;
 
-        var t = a.AddComponent<Thruster>();
-        t.LinearDrag = 0.9f;
+        // var t = a.AddComponent<Thruster>();
+        // t.LinearDrag = 0.9f;
 
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector2(1, 1);
@@ -20,7 +23,7 @@ public class UnityEnemyShipFactory : UnityFactory<Ship>
         c.OnCollision += a.DestroyComponent;
 
         a.Transform.Scale = new Vector2(0.5f, 1);
-        a.Speed = 0.3f;
+        a.Speed = 1f;
         a.Direction = new Vector2(1, 0);
 
         var p = a.AddComponent<Gun>();

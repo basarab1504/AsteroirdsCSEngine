@@ -118,12 +118,16 @@ namespace Asteroids
 
             hit = new Vector2(0, 0);
 
-            foreach (Collider a in ActiveObjects.OfType<Collider>())
-                if (LayerSettings.ContainsKey(layerMask) && LayerSettings[layerMask].Any(x => x == a.CollisionLayer))
+            if (LayerSettings.ContainsKey(layerMask))
+                foreach (Collider a in ActiveObjects.OfType<Collider>().Where(x => x.CollisionLayer == layerMask))
                 {
-                    hit = a.Transform.Position;
-                    return ShouldCollide(t, a.Transform);
+                    if (ShouldCollide(t, a.Transform))
+                    {
+                        hit = a.Transform.Position;
+                        return true;
+                    }
                 }
+
             return false;
         }
 

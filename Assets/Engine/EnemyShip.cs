@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyShip : Ship
 {
     public float VisibilityAngle { get; set; }
+    public float VisibilityRadius { get; set; }
+    public float KeepDistance { get; set; }
 
     public override void Start()
     {
@@ -15,12 +17,20 @@ public class EnemyShip : Ship
     public override void Update()
     {
         base.Update();
-        if (Game.AnyOverlaps(Transform.Position, 10, Layer.Player, out Vector2 hit))
+        if (Game.AnyOverlaps(Transform.Position, VisibilityRadius, Layer.Player, out Vector2 hit))
         {
             float signedAngle = Vector2.SignedAngle(Transform.Rotation, hit - Transform.Position);
             if (signedAngle >= VisibilityAngle)
             {
                 Rotate(1 * Mathf.Sign(signedAngle));
+            }
+
+            var dir = hit - Transform.Position;
+            if (dir.magnitude > KeepDistance)
+            {
+                var dirNorm = dir.normalized * Speed;
+                Move(dirNorm * Speed * Game.DeltaTime);
+                // GetComponent<Thruster>().AddForce(dirNorm);
             }
         }
     }
