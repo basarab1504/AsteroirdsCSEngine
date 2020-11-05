@@ -22,12 +22,10 @@ namespace Asteroids
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
 
-        public Vector3 Up => Rotation - Position;
-
         public override void OnCreate()
         {
             position = new Vector3();
-            Rotation = new Vector3();
+            Rotation = new Vector3() { X = 0, Y = 1, Z = 0 };
             Scale = new Vector3();
         }
     }

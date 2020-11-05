@@ -24,7 +24,7 @@ public class UnityShipFactory : UnityFactory<Ship>
         c.CollisionLayer = Layer.Player;
         c.OnCollision += a.Destroy;
 
-        a.Transform.Scale = new Vector3(1, 1, 0);
+        a.Transform.Scale = new Vector3(0.5f, 1, 0);
         a.Speed = 0.3f;
         a.Direction = new Vector3(1, 0, 0);
 

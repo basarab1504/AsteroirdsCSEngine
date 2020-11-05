@@ -30,6 +30,7 @@ public class UnityObserver : MonoBehaviour
         // if (asteroidsObject is Ship)
         //     Debug.Log(asteroidsObject.Transform.Position.X + " " + asteroidsObject.Transform.Position.Y + " " + asteroidsObject.GetComponent<Gun>().Transform.Position.X + " " + asteroidsObject.GetComponent<Gun>().Transform.Position.Y);
         transform.position = new UnityEngine.Vector3(asteroidsObject.Transform.Position.X, asteroidsObject.Transform.Position.Y, asteroidsObject.Transform.Position.Z);
+        transform.rotation = Quaternion.LookRotation(transform.forward, new UnityEngine.Vector3(asteroidsObject.Transform.Position.X, asteroidsObject.Transform.Position.Y, 0).normalized);
         // if (asteroidsObject is Ship)
         //     Debug.Log(asteroidsObject.Transform.Rotation.X + " " + asteroidsObject.Transform.Rotation.Y + " " + asteroidsObject.Transform.Rotation.Z);
         // transform.rotation = Quaternion.Euler(asteroidsObject.Transform.Rotation.X, asteroidsObject.Transform.Rotation.Y, asteroidsObject.Transform.Rotation.Z);
