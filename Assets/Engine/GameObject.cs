@@ -22,8 +22,6 @@ namespace Asteroids
         public void Move(Vector3 direction)
         {
             Transform.Position += direction;
-            // foreach (var child in Components.OfType<GameObject>())
-            //     child.Move(direction);
         }
     }
 }

@@ -44,11 +44,11 @@ namespace Asteroids
             //     Direction = new Vector3(0, -1, 0);
             //сделать ввод с клавы
 
-            if (new Random().NextDouble() > 0.99f)
-            {
-                Transform.Rotation = Vector3.Rotate(Transform.Rotation, 45);
-                Thruster.AddForce(Transform.Rotation * Speed);
-            }
+            // if (new Random().NextDouble() > 0.99f)
+            // {
+            //     Transform.Rotation = Vector3.Rotate(Transform.Rotation, 45);
+            //     Thruster.AddForce(Transform.Rotation * Speed);
+            // }
 
             //     Gun.Shoot(Direction);
             // Rotate(45);

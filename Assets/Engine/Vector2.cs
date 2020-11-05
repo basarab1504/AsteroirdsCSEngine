@@ -27,6 +27,23 @@ namespace Asteroids
             return matrix;
         }
 
+        public static float SignedAngle(Vector3 a, Vector3 b)
+        {
+            var angle = Math.Acos(Dot(Normalize(a), Normalize(b)));
+            var cross = crossProduct(Va, Vb);
+            if (dotProduct(Vn, cross) < 0)
+            { // Or > 0
+                angle = -angle;
+            }
+            return Sign
+        }
+
+        public static Vector3 Normalize(Vector3 v)
+        {
+            var m = Magnitude(v);
+            return new Vector3(v.X / m, v.Y / m, 0);
+        }
+
         public static float Magnitude(Vector3 v)
         {
             return (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
@@ -41,6 +58,11 @@ namespace Asteroids
         {
             var rotaionMatrix = RotationMatrix(radians);
             return new Vector3(v.X * rotaionMatrix[0, 0] + v.Y * rotaionMatrix[0, 1], v.X * rotaionMatrix[1, 0] + v.Y * rotaionMatrix[1, 1], 0);
+        }
+
+        public static float Dot(Vector3 a, Vector3 b)
+        {
+            return (float)Math.Acos((a.X * b.X + a.Y * b.Y) / (Magnitude(a) * Magnitude(b)));
         }
 
         public static Vector3 operator +(Vector3 a, Vector3 b)

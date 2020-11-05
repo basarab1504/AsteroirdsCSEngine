@@ -110,15 +110,20 @@ namespace Asteroids
             }
         }
 
-        public static bool AnyOverlaps(Vector3 point, float radius, Layer layerMask)
+        public static bool AnyOverlaps(Vector3 point, float radius, Layer layerMask, out Vector3 hit)
         {
             var t = new Transform();
             t.Position = point;
             t.Scale = new Vector3() { X = radius, Y = radius, Z = radius };
 
+            hit = new Vector3(0, 0, 0);
+
             foreach (Collider a in ActiveObjects.OfType<Collider>())
                 if (LayerSettings.ContainsKey(layerMask) && LayerSettings[layerMask].Any(x => x == a.CollisionLayer))
+                {
+                    hit = a.Transform.Position;
                     return ShouldCollide(t, a.Transform);
+                }
             return false;
         }
 
