@@ -11,8 +11,9 @@ public class UnityEnemyShipFactory : UnityFactory<Ship>
     {
         var a = Game.Create<EnemyShip>();
         a.VisibilityRadius = 100;
-        a.VisibilityAngle = 45;
+        a.VisibilityAngle = 15;
         a.KeepDistance = 3;
+        a.RotationSpeed = 5;
 
         // var t = a.AddComponent<Thruster>();
         // t.LinearDrag = 0.9f;

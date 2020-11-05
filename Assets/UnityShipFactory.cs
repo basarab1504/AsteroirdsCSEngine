@@ -13,7 +13,7 @@ public class UnityShipFactory : UnityFactory<Ship>
     {
         var a = Game.Create<Ship>();
         a.RotationSpeed = 5;
-        
+
         var t = a.AddComponent<Thruster>();
         t.LinearDrag = 0.9f;
 

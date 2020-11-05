@@ -16,13 +16,13 @@ public class EnemyShip : Ship
 
     public override void Update()
     {
-        base.Update();
+        // base.Update();
         if (Game.AnyOverlaps(Transform.Position, VisibilityRadius, Layer.Player, out Vector2 hit))
         {
             float signedAngle = Vector2.SignedAngle(Transform.Rotation, hit - Transform.Position);
-            if (signedAngle >= VisibilityAngle)
+            if (Math.Abs(signedAngle) >= VisibilityAngle)
             {
-                Rotate(1 * Mathf.Sign(signedAngle));
+                Rotate(RotationSpeed * Mathf.Sign(signedAngle));
             }
 
             var dir = hit - Transform.Position;
