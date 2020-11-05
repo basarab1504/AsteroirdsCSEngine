@@ -11,7 +11,7 @@ public class UnityLaserAmmoFactory : UnityFactory<Ammo>
         var a = Game.Create<Ammo>();
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector3(0.2f, 0.2f, 0);
-        c.CollisionLayer = Layer.Bullet;
+        c.CollisionLayer = Layer.BulletPlayer;
 
         a.Transform.Scale = new Vector3(0.2f, 0.2f, 0);
         a.Lifetime = 100;

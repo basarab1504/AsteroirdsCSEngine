@@ -4,18 +4,19 @@ using UnityEngine;
 using Asteroids;
 using Collider = Asteroids.Collider;
 
-public class UnityAmmoFactory : UnityFactory<Ammo>
+public class UnityEnemyBulletFactory : UnityFactory<Ammo>
 {
     public override Ammo UnityCreate()
     {
         var a = Game.Create<Ammo>();
         var c = a.AddComponent<Collider>();
-        c.Transform.Scale = new Vector2(0.4f, 0.4f);
-        c.CollisionLayer = Layer.BulletPlayer;
+        c.Transform.Scale = new Vector2(0.3f, 0.3f);
+        c.CollisionLayer = Layer.BulletEnemy;
         c.OnCollision += a.DestroyComponent;
 
-        a.Transform.Scale = new Vector2(0.4f, 0.4f);
-        a.Lifetime = 100;
+        a.Transform.Scale = new Vector2(0.3f, 0.3f);
+        a.Lifetime = 75;
+
         var r = a.AddComponent<Render>();
         r.Symbol = 'B';
 

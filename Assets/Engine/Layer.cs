@@ -5,6 +5,7 @@ namespace Asteroids
         Player,
         EnemyShip,
         Asteroid,
-        Bullet
+        BulletEnemy,
+        BulletPlayer
     }
 }

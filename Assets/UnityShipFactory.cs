@@ -23,15 +23,14 @@ public class UnityShipFactory : UnityFactory<Ship>
         c.OnCollision += a.DestroyComponent;
 
         a.Transform.Scale = new Vector2(0.5f, 1);
-        a.Speed = 0.3f;
-        a.Direction = new Vector2(1, 0);
+        a.Speed = 0.02f;
 
         var p = a.AddComponent<Gun>();
         var am = p.AddComponent<Pool<Ammo>>();
         p.BulletCount = 3;
         p.AmmoBox = am;
         p.SetAmmo(factory);
-        p.Force = 6;
+        p.Force = 10;
 
         var r = a.AddComponent<Render>();
         r.Symbol = 'S';

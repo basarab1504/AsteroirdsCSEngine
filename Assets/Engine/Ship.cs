@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,24 +30,21 @@ namespace Asteroids
     public class Ship : GameObject
     {
         public float Speed { get; set; }
-        private Gun Gun { get; set; }
-        private Thruster Thruster { get; set; }
-        public Vector2 Direction { get; set; }
         public float RotationSpeed { get; set; }
 
         public IEnumerable<Command> Commands { get; set; }
 
         public override void Start()
         {
-            base.Start();
-            Gun = GetComponent<Gun>();
-            Thruster = GetComponent<Thruster>();
+            System.Numerics.Vector2 a = new System.Numerics.Vector2(1, 0);
 
+            base.Start();
             Commands = new List<Command>()
             {
-                new Command(() => Input.GetKeyDown(KeyCode.Space), () => Thruster.AddForce(Transform.Rotation * Speed)),
+                new Command(() => Input.GetKey(KeyCode.UpArrow), () => GetComponent<Thruster>().AddForce(Transform.Direction.normalized * Speed)),
                 new Command(() => Input.GetKey(KeyCode.RightArrow), () => Rotate(-RotationSpeed)),
                 new Command(() => Input.GetKey(KeyCode.LeftArrow), () => Rotate(RotationSpeed)),
+                new Command(() => Input.GetKeyDown(KeyCode.LeftAlt), () => GetComponent<Gun>().Shoot()),
             };
         }
 

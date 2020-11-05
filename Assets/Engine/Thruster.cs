@@ -11,7 +11,6 @@ namespace Asteroids
         {
             base.OnCreate();
             Velocity = new Vector2();
-            LinearDrag = 1;
         }
 
         public void AddForce(Vector2 force)

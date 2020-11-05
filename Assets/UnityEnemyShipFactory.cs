@@ -5,7 +5,7 @@ using Collider = Asteroids.Collider;
 public class UnityEnemyShipFactory : UnityFactory<Ship>
 {
     [SerializeField]
-    private UnityAmmoFactory factory;
+    private UnityEnemyBulletFactory factory;
 
     public override Ship UnityCreate()
     {
@@ -15,9 +15,6 @@ public class UnityEnemyShipFactory : UnityFactory<Ship>
         a.KeepDistance = 3;
         a.RotationSpeed = 5;
 
-        // var t = a.AddComponent<Thruster>();
-        // t.LinearDrag = 0.9f;
-
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector2(1, 1);
         c.CollisionLayer = Layer.EnemyShip;
@@ -25,7 +22,6 @@ public class UnityEnemyShipFactory : UnityFactory<Ship>
 
         a.Transform.Scale = new Vector2(0.5f, 1);
         a.Speed = 1f;
-        a.Direction = new Vector2(1, 0);
 
         var p = a.AddComponent<Gun>();
         var am = p.AddComponent<Pool<Ammo>>();

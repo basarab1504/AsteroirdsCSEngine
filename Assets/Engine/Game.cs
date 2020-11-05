@@ -72,23 +72,16 @@ namespace Asteroids
                 clamper.Clamp(go);
 
 
-            CheckCollisions();
-
-            // Render();
-
             foreach (var u in ActiveObjects)
                 u.Update();
 
+            CheckCollisions();
 
             foreach (var de in toDestroy)
                 objects.Remove(de);
             toDestroy.Clear();
 
             time++;
-
-            //двинуть объекты
-            //проверить коллизии
-            //отрисовать
         }
 
         public void CheckCollisions()

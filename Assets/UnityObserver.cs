@@ -8,7 +8,7 @@ public class UnityObserver : MonoBehaviour
     void Start()
     {
         asteroidsObject.ActiveStateChange += x => gameObject.SetActive(x);
-        asteroidsObject.Destroy += () => Destroy(gameObject);
+        asteroidsObject.Destroy += () => gameObject.SetActive(false);
         transform.position = asteroidsObject.Transform.Position;
         transform.localScale = asteroidsObject.Transform.Scale;
     }
@@ -17,6 +17,6 @@ public class UnityObserver : MonoBehaviour
     void Update()
     {
         transform.position = asteroidsObject.Transform.Position;
-        transform.rotation = Quaternion.LookRotation(transform.forward, asteroidsObject.Transform.Rotation.normalized);
+        transform.rotation = Quaternion.LookRotation(transform.forward, asteroidsObject.Transform.Direction.normalized);
     }
 }

@@ -20,13 +20,13 @@ namespace Asteroids
             AmmoBox.RebuildPool(BulletCount);
         }
 
-        public void Shoot(Vector2 direction)
+        public void Shoot()
         {
             Ammo ammo;
             if (AmmoBox.TryGetPoolable(out ammo))
             {
                 ammo.Transform.Position = Transform.Position;
-                ammo.Shoot(direction * Force);
+                ammo.Shoot(Transform.Direction.normalized * Force);
             }
             // if (currentCapacity > 0)
             // {
