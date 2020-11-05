@@ -12,7 +12,7 @@ public class UnityAmmoFactory : UnityFactory<Ammo>
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector2(0.4f, 0.4f);
         c.CollisionLayer = Layer.Bullet;
-        c.OnCollision += a.Destroy;
+        c.OnCollision += a.DestroyComponent;
 
         a.Transform.Scale = new Vector2(0.4f, 0.4f);
         a.Lifetime = 100;

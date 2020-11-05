@@ -2,12 +2,10 @@
 using Asteroids;
 using Collider = Asteroids.Collider;
 
-public class UnityShipFactory : UnityFactory<Ship>
+public class UnityEnemyShipFactory : UnityFactory<Ship>
 {
     [SerializeField]
     private UnityAmmoFactory factory;
-    [SerializeField]
-    private UnityLaserAmmoFactory laserFactory;
 
     public override Ship UnityCreate()
     {
@@ -18,7 +16,7 @@ public class UnityShipFactory : UnityFactory<Ship>
 
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector2(1, 1);
-        c.CollisionLayer = Layer.Player;
+        c.CollisionLayer = Layer.EnemyShip;
         c.OnCollision += a.DestroyComponent;
 
         a.Transform.Scale = new Vector2(0.5f, 1);

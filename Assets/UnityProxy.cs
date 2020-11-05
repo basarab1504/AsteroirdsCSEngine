@@ -25,9 +25,9 @@ public class UnityProxy : MonoBehaviour
         asteroidSpawner.Factory = GetComponent<UnityAsteroidFactory>();
 
         // var enemyShipSpawner = Game.Create<CooldownSpawner<Ship>>();
-        // enemyShipSpawner.Transform.Scale = new Asteroids.Vector3(10, 10, 0);
+        // enemyShipSpawner.Transform.Scale = new Vector2(10, 10);
         // enemyShipSpawner.Cooldown = 50;
-        // enemyShipSpawner.Factory = GetComponent<UnityShipFactory>();
+        // enemyShipSpawner.Factory = GetComponent<UnityEnemyShipFactory>();
 
         var shipSpawner = Game.Create<Spawner<Ship>>();
         shipSpawner.Factory = GetComponent<UnityShipFactory>();

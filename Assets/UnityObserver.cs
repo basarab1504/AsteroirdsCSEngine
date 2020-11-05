@@ -7,8 +7,8 @@ public class UnityObserver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        asteroidsObject.OnActiveStateChange += x => gameObject.SetActive(x);
-        asteroidsObject.OnDestroy += () => gameObject.SetActive(false);
+        asteroidsObject.ActiveStateChange += x => gameObject.SetActive(x);
+        asteroidsObject.Destroy += () => Destroy(gameObject);
         transform.position = asteroidsObject.Transform.Position;
         transform.localScale = asteroidsObject.Transform.Scale;
     }

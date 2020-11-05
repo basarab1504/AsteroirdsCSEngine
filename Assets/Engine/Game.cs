@@ -34,7 +34,7 @@ namespace Asteroids
             toDestroy.Add(Component);
         }
 
-        public void Init(Vector3 size, int framerate)
+        public void Init(Vector2 size, int framerate)
         {
             clamper = new Clamper();
             clamper.AreaSize = size;
@@ -110,13 +110,13 @@ namespace Asteroids
             }
         }
 
-        public static bool AnyOverlaps(Vector3 point, float radius, Layer layerMask, out Vector3 hit)
+        public static bool AnyOverlaps(Vector2 point, float radius, Layer layerMask, out Vector2 hit)
         {
             var t = new Transform();
             t.Position = point;
-            t.Scale = new Vector3() { x = radius, y = radius, z = radius };
+            t.Scale = new Vector2() { x = radius, y = radius };
 
-            hit = new Vector3(0, 0, 0);
+            hit = new Vector2(0, 0);
 
             foreach (Collider a in ActiveObjects.OfType<Collider>())
                 if (LayerSettings.ContainsKey(layerMask) && LayerSettings[layerMask].Any(x => x == a.CollisionLayer))

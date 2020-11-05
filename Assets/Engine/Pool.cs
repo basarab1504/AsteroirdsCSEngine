@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Asteroids
 {
-    public class Pool<T> : GameObject where T : IPoolable
+    public class Pool<T> : GameObject where T : Component, IPoolable
     {
         private List<T> poolables = new List<T>();
 
@@ -14,7 +15,8 @@ namespace Asteroids
             poolables = new List<T>(size);
             for (; size > 0; size--)
             {
-                poolables.Add(Factory.Create());
+                var created = Factory.Create();
+                poolables.Add(created);
             }
         }
 
@@ -31,6 +33,14 @@ namespace Asteroids
                 }
 
             return false;
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            foreach(var p in poolables)
+                p.DestroyComponent();
+            poolables.Clear();
         }
     }
 }

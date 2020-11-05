@@ -1,38 +1,67 @@
 // using System;
+using UnityEngine;
+
+namespace Asteroids
+{
+    public static class Vector2Extensions
+    {
+
+        public static float[,] RotationMatrix(float radians)
+        {
+            float[,] matrix = new float[2, 2];
+            matrix[0, 0] = Mathf.Cos(radians);
+            matrix[0, 1] = -Mathf.Sin(radians);
+            matrix[1, 0] = Mathf.Sin(radians);
+            matrix[1, 1] = Mathf.Cos(radians);
+            return matrix;
+        }
+
+        public static Vector2 Rotate(this Vector2 v, float angle)
+        {
+            return RotateRadians(v, angle * Mathf.Deg2Rad);
+        }
+
+        public static Vector2 RotateRadians(this Vector2 v, float radians)
+        {
+            var rotaionMatrix = RotationMatrix(radians);
+            return new Vector2(v.x * rotaionMatrix[0, 0] + v.y * rotaionMatrix[0, 1], v.x * rotaionMatrix[1, 0] + v.y * rotaionMatrix[1, 1]);
+        }
+    }
+}
 
 // namespace Asteroids
 // {
-//     public struct Vector3
+//     public struct Vector2
 //     {
 //         private const double DegToRad = Math.PI / 180;
 
-//         public float X { get; set; }
-//         public float Y { get; set; }
-//         public float Z { get; set; }
+//         public float x { get; set; }
+//         public float y { get; set; }
+//         public float z { get; set; }
 
-//         public Vector3(float x, float y, float z)
+//         public Vector2(float x, float y, float z)
 //         {
-//             X = x;
-//             Y = y;
-//             Z = z;
+//             x = x;
+//             y = y;
+//             z = z;
 //         }
 
 //         public static float[,] RotationMatrix(double radians)
 //         {
 //             float[,] matrix = new float[2, 2];
-//             matrix[0, 0] = (float)Math.Cos(radians);
-//             matrix[0, 1] = -(float)Math.Sin(radians);
-//             matrix[1, 0] = (float)Math.Sin(radians);
-//             matrix[1, 1] = (float)Math.Cos(radians);
+//             matrix[0, 0] = Math.Cos(radians);
+//             matrix[0, 1] = -Math.Sin(radians);
+//             matrix[1, 0] = Math.Sin(radians);
+//             matrix[1, 1] = Math.Cos(radians);
 //             return matrix;
 //         }
 
-//         public static Vector3 Cross(Vector3 a, Vector3 b)
+//         public static Vector2 Cross(Vector2 a, Vector2 b)
 //         {
-//             return new Vector3(a.Y * b.Z - a.Z * b.Y, a.X * b.Z, a.X * b.Y - a.Y * b.X);
+//             return new Vector2(a.y * b.z - a.z * b.y, a.x * b.z, a.x * b.y - a.y * b.x);
 //         }
 
-//         public static float SignedAngle(Vector3 a, Vector3 b)
+//         public static float SignedAngle(Vector2 a, Vector2 b)
 //         {
 //             var angle = Math.Acos(Dot(Normalize(a), Normalize(b)));
 //             var cross = crossProduct(Va, Vb);
@@ -43,77 +72,77 @@
 //             return Sign
 //         }
 
-//         public static Vector3 Normalize(Vector3 v)
+//         public static Vector2 Normalize(Vector2 v)
 //         {
 //             var m = Magnitude(v);
-//             return new Vector3(v.X / m, v.Y / m, 0);
+//             return new Vector2(v.x / m, v.y / m, 0);
 //         }
 
-//         public static float Magnitude(Vector3 v)
+//         public static float Magnitude(Vector2 v)
 //         {
-//             return (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
+//             return Math.Sqrt(Math.Pow(v.x, 2) + Math.Pow(v.y, 2));
 //         }
 
-//         public static Vector3 Rotate(Vector3 v, double degrees)
+//         public static Vector2 Rotate(Vector2 v, double angle)
 //         {
-//             return RotateRadians(v, degrees * DegToRad);
+//             return RotateRadians(v, angle * DegToRad);
 //         }
 
-//         public static Vector3 RotateRadians(Vector3 v, double radians)
+//         public static Vector2 RotateRadians(Vector2 v, double radians)
 //         {
 //             var rotaionMatrix = RotationMatrix(radians);
-//             return new Vector3(v.X * rotaionMatrix[0, 0] + v.Y * rotaionMatrix[0, 1], v.X * rotaionMatrix[1, 0] + v.Y * rotaionMatrix[1, 1], 0);
+//             return new Vector2(v.x * rotaionMatrix[0, 0] + v.y * rotaionMatrix[0, 1], v.x * rotaionMatrix[1, 0] + v.y * rotaionMatrix[1, 1], 0);
 //         }
 
-//         public static float Dot(Vector3 a, Vector3 b)
+//         public static float Dot(Vector2 a, Vector2 b)
 //         {
-//             return (float)Math.Acos((a.X * b.X + a.Y * b.Y) / (Magnitude(a) * Magnitude(b)));
+//             return Math.Acos((a.x * b.x + a.y * b.y) / (Magnitude(a) * Magnitude(b)));
 //         }
 
-//         public static Vector3 operator +(Vector3 a, Vector3 b)
+//         public static Vector2 operator +(Vector2 a, Vector2 b)
 //         {
-//             return new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+//             return new Vector2(a.x + b.x, a.y + b.y, a.z + b.z);
 //         }
-//         public static Vector3 operator -(Vector3 a, Vector3 b)
+//         public static Vector2 operator -(Vector2 a, Vector2 b)
 //         {
-//             return new Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+//             return new Vector2(a.x - b.x, a.y - b.y, a.z - b.z);
 //         }
-//         public static Vector3 operator *(Vector3 a, float d)
+//         public static Vector2 operator *(Vector2 a, float d)
 //         {
-//             return new Vector3(a.X * d, a.Y * d, a.Z * d);
+//             return new Vector2(a.x * d, a.y * d, a.z * d);
 //         }
-//         public static Vector3 operator *(float d, Vector3 a)
+//         public static Vector2 operator *(float d, Vector2 a)
 //         {
-//             return new Vector3(a.X * d, a.Y * d, a.Z * d);
+//             return new Vector2(a.x * d, a.y * d, a.z * d);
 //         }
-//         public static Vector3 operator /(Vector3 a, float d)
+//         public static Vector2 operator /(Vector2 a, float d)
 //         {
-//             return new Vector3(a.X / d, a.Y / d, a.Z / d);
+//             return new Vector2(a.x / d, a.y / d, a.z / d);
 //         }
-//         public static bool operator ==(Vector3 a, Vector3 b)
+//         public static bool operator ==(Vector2 a, Vector2 b)
 //         {
-//             return (a.X == b.X && a.Y == b.Y && a.Z == b.Z);
+//             return (a.x == b.x && a.y == b.y && a.z == b.z);
 //         }
 
-//         public static bool operator !=(Vector3 a, Vector3 b)
+//         public static bool operator !=(Vector2 a, Vector2 b)
 //         {
-//             return (a.X != b.X || a.Y != b.Y || a.Z != b.Z);
+//             return (a.x != b.x || a.y != b.y || a.z != b.z);
 //         }
 
 //         public override bool Equals(object obj)
 //         {
-//             return obj is Vector3 d &&
-//                    X == d.X &&
-//                    Y == d.Y &&
-//                    Z == d.Z;
+//             return obj is Vector2 d &&
+//                    x == d.x &&
+//                    y == d.y &&
+//                    z == d.z;
 //         }
 
 //         public override int GetHashCode()
 //         {
 //             int hashCode = -307843816;
-//             hashCode = hashCode * -1521134295 + X.GetHashCode();
-//             hashCode = hashCode * -1521134295 + Y.GetHashCode();
-//             hashCode = hashCode * -1521134295 + Z.GetHashCode();
+//             hashCode = hashCode * -1521134295 + x.GetHashCode();
+//             hashCode = hashCode * -1521134295 + y.GetHashCode();
+//             hashCode = hashCode * -1521134295 + z.GetHashCode();
 //             return hashCode;
 //         }
 //     }

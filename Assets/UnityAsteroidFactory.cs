@@ -12,7 +12,7 @@ public class UnityAsteroidFactory : UnityFactory<Asteroid>
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector2(1, 1);
         c.CollisionLayer = Layer.Asteroid;
-        c.OnCollision += a.Destroy;
+        c.OnCollision += a.DestroyComponent;
 
         a.Transform.Scale = new Vector2(1, 1);
         a.Speed = 1;

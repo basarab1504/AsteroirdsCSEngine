@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Asteroids
 {
     public abstract class Component
     {
-        public event Action<bool> OnActiveStateChange;
-        public event Action OnDestroy;
+        public event Action<bool> ActiveStateChange;
+        public event Action Destroy;
 
         private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
         public IEnumerable<Component> Components => components.Values;
@@ -23,14 +24,19 @@ namespace Asteroids
             foreach (var c in components.Values)
                 c.SetActive(value);
 
-            if (OnActiveStateChange != null)
-                OnActiveStateChange(active);
+            if (ActiveStateChange != null)
+                ActiveStateChange(active);
         }
 
         //для инициализаций начальных чтобы к иниц можно было обращаться (создание - здесь)
         public virtual void OnCreate()
         {
             // SetActive(true);
+        }
+
+        public virtual void OnDestroy()
+        {
+
         }
 
         //для инициализации созданных (создание компонентов - не здесь)
@@ -67,15 +73,17 @@ namespace Asteroids
             Game.Destroy(component);
         }
 
-        public void Destroy()
+        public void DestroyComponent()
         {
+            OnDestroy();
             foreach (var component in components)
             {
                 component.Value.parent = null;
-                Game.Destroy(component.Value);
+                component.Value.DestroyComponent();
             }
             components.Clear();
-            OnDestroy();
+            if (Destroy != null)
+                Destroy();
             Game.Destroy(this);
         }
     }

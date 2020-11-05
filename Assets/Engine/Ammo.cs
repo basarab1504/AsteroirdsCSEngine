@@ -13,7 +13,7 @@ namespace Asteroids
         {
             base.Start();
             actualLifetime = Lifetime;
-            SetActive(false);
+            // SetActive(false);
         }
 
         public void Shoot(Vector2 force)
@@ -25,8 +25,8 @@ namespace Asteroids
         public override void Update()
         {
             actualLifetime--;
-            if (actualLifetime <= 0)
-                SetActive(false);
+            // if (actualLifetime <= 0)
+            //     SetActive(false);
             Transform.Position += direction * Game.DeltaTime;
         }
 
