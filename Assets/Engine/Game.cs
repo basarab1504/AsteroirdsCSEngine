@@ -114,7 +114,7 @@ namespace Asteroids
         {
             var t = new Transform();
             t.Position = point;
-            t.Scale = new Vector3() { X = radius, Y = radius, Z = radius };
+            t.Scale = new Vector3() { x = radius, y = radius, z = radius };
 
             hit = new Vector3(0, 0, 0);
 
@@ -132,7 +132,7 @@ namespace Asteroids
             var dif = b.Position - a.Position;
             var sizeSum = b.Scale * 0.5f + a.Scale * 0.5f;
 
-            if (sizeSum.X >= Vector3.Magnitude(dif) || sizeSum.Y >= Vector3.Magnitude(dif))
+            if (sizeSum.x >= dif.magnitude || sizeSum.y >= dif.magnitude)
                 return true;
             return false;
         }

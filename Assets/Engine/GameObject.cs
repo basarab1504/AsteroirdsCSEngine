@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -19,7 +17,7 @@ namespace Asteroids
             Transform.Rotation = Vector3.Rotate(Transform.Rotation, angle);
         }
 
-        public void Move(Vector3 direction)
+        public void Move(Vector2 direction)
         {
             Transform.Position += direction;
         }

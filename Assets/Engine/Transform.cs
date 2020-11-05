@@ -1,11 +1,12 @@
 using System.Linq;
+using UnityEngine;
 
 namespace Asteroids
 {
     public class Transform : Component
     {
-        private Vector3 position;
-        public Vector3 Position
+        private Vector2 position;
+        public Vector2 Position
         {
             //мерзко и ужасно
             get => position;
@@ -19,14 +20,14 @@ namespace Asteroids
                 }
             }
         }
-        public Vector3 Rotation { get; set; }
-        public Vector3 Scale { get; set; }
+        public Vector2 Rotation { get; set; }
+        public Vector2 Scale { get; set; }
 
         public override void OnCreate()
         {
-            position = new Vector3();
-            Rotation = new Vector3() { X = 0, Y = 1, Z = 0 };
-            Scale = new Vector3();
+            position = new Vector2();
+            Rotation = new Vector2(0, 1);
+            Scale = new Vector2();
         }
     }
 }

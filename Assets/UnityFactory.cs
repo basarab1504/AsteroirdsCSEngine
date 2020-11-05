@@ -12,7 +12,7 @@ public abstract class UnityFactory<T> : MonoBehaviour, IFactory<T> where T : Ast
     {
         var created = UnityCreate();
         // created.OnActiveStateChange += x => gameObject.SetActive(x);
-        var instantiated = Instantiate(observer, new UnityEngine.Vector3(created.Transform.Position.X, created.Transform.Position.Y, created.Transform.Position.Z), Quaternion.identity);
+        var instantiated = Instantiate(observer, created.Transform.Position, Quaternion.identity);
         instantiated.asteroidsObject = created;
         return created;
     }

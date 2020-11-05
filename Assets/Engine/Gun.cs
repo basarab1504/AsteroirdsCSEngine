@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -21,7 +20,7 @@ namespace Asteroids
             AmmoBox.RebuildPool(BulletCount);
         }
 
-        public void Shoot(Vector3 direction)
+        public void Shoot(Vector2 direction)
         {
             Ammo ammo;
             if (AmmoBox.TryGetPoolable(out ammo))

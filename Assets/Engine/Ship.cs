@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -8,7 +7,7 @@ namespace Asteroids
         public float Speed { get; set; }
         private Gun Gun { get; set; }
         private Thruster Thruster { get; set; }
-        public Vector3 Direction { get; set; }
+        public Vector2 Direction { get; set; }
 
         // public void AddGun(Gun gun)
         // {

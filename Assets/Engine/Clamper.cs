@@ -5,24 +5,24 @@ namespace Asteroids
 {
     public class Clamper
     {
-        private Vector3 AreaBorders => AreaSize * 0.5f;
-        public Vector3 AreaSize { get; set; }
+        private Vector2 AreaBorders => AreaSize * 0.5f;
+        public Vector2 AreaSize { get; set; }
 
         public void Clamp(GameObject go)
         {
             // Console.WriteLine("X:" + AreaBorders.X + "Y:" + AreaBorders.Y);
 
-            float x = go.Transform.Position.X;
-            float y = go.Transform.Position.Y;
+            float x = go.Transform.Position.x;
+            float y = go.Transform.Position.y;
 
-            if (x > AreaBorders.X || x < -AreaBorders.X || y > AreaBorders.Y || y < -AreaBorders.Y)
+            if (x > AreaBorders.x || x < -AreaBorders.x || y > AreaBorders.y || y < -AreaBorders.y)
             {
-                Vector3 pos;
+                Vector2 pos;
 
                 if (Mathf.Abs(x) >= Mathf.Abs(y))
-                    pos = new Vector3(-x, y, 0);
+                    pos = new Vector2(-x, y);
                 else
-                    pos = new Vector3(x, -y, 0);
+                    pos = new Vector2(x, -y);
 
                 go.Transform.Position = pos;
             }

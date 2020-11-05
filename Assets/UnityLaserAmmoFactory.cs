@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Asteroids;
 using Collider = Asteroids.Collider;
-using Vector3 = Asteroids.Vector3;
 
 public class UnityLaserAmmoFactory : UnityFactory<Ammo>
 {

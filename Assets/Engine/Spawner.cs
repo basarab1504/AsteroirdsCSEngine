@@ -1,4 +1,4 @@
-using System;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -12,30 +12,28 @@ namespace Asteroids
             spawned.Transform.Position = GetPosition();
         }
 
-        private Vector3 GetPosition()
+        private Vector2 GetPosition()
         {
             float x;
             float y;
 
-            var areaSizeX = Transform.Scale.X * 0.5f;
-            var areaSizeY = Transform.Scale.Y * 0.5f;
+            var areaSizeX = Transform.Scale.x * 0.5f;
+            var areaSizeY = Transform.Scale.y * 0.5f;
 
-            var rnd = new Random();
-
-            bool XoY = rnd.NextDouble() > 0.5f ? true : false;
+            bool XoY = Random.Range(0f, 1f) > 0.5f ? true : false;
 
             if (XoY)
             {
-                x = rnd.NextDouble() > 0.5f ? -areaSizeX : areaSizeX;
-                y = (float)rnd.NextDouble() * (areaSizeY - (-areaSizeY)) + (-areaSizeY);
+                x = Random.Range(0f, 1f) > 0.5f ? -areaSizeX : areaSizeX;
+                y = Random.Range(-areaSizeY, areaSizeY);
             }
             else
             {
-                y = rnd.NextDouble() > 0.5f ? -areaSizeY : areaSizeY;
-                x = (float)rnd.NextDouble() * (areaSizeY - (-areaSizeX)) + (-areaSizeX);
+                y = Random.Range(0f, 1f) > 0.5f ? -areaSizeY : areaSizeY;
+                x = Random.Range(-areaSizeX, areaSizeX);
             }
 
-            return new Vector3(x, y, 0);
+            return new Vector2(x, y);
         }
     }
 

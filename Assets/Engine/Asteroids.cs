@@ -1,4 +1,4 @@
-using System;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -20,9 +20,8 @@ namespace Asteroids
 
         private void PushRandom()
         {
-            Random rnd = new Random();
-            var x = rnd.NextDouble() > 0.5f ? -1f : 1f;
-            var y = rnd.NextDouble() > 0.5f ? -1f : 1f;
+            var x = Random.Range(0, 1f) > 0.5f ? -1f : 1f;
+            var y = Random.Range(0, 1) > 0.5f ? -1f : 1f;
             Direction = new Vector3(x, y, 0);
         }
     }

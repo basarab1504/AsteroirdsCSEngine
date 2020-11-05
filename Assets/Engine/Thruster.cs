@@ -1,18 +1,20 @@
+using UnityEngine;
+
 namespace Asteroids
 {
     public class Thruster : Component
     {
-        public Vector3 Velocity { get; set; }
+        public Vector2 Velocity { get; set; }
         public float LinearDrag { get; set; }
 
         public override void OnCreate()
         {
             base.OnCreate();
-            Velocity = new Vector3();
+            Velocity = new Vector2();
             LinearDrag = 1;
         }
 
-        public void AddForce(Vector3 force)
+        public void AddForce(Vector2 force)
         {
             Velocity += force;
         }

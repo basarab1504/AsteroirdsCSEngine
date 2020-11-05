@@ -1,10 +1,11 @@
 using System;
+using UnityEngine;
 
 namespace Asteroids
 {
     public class Ammo : GameObject, IPoolable
     {
-        private Vector3 direction;
+        private Vector2 direction;
         private float actualLifetime;
         public float Lifetime { get; set; }
 
@@ -15,7 +16,7 @@ namespace Asteroids
             SetActive(false);
         }
 
-        public void Shoot(Vector3 force)
+        public void Shoot(Vector2 force)
         {
             this.direction = force;
             // this.speed = force;
