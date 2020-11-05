@@ -14,7 +14,7 @@ namespace Asteroids
         public static float Time => time;
         public static float DeltaTime => 1f / framerate;
 
-        public Dictionary<Layer, List<Layer>> LayerSettings { get; set; } = new Dictionary<Layer, List<Layer>>();
+        public static Dictionary<Layer, List<Layer>> LayerSettings { get; set; } = new Dictionary<Layer, List<Layer>>();
         private static List<Component> objects = new List<Component>();
         private static List<Component> ActiveObjects => objects.FindAll(x => x.Active);
         private static List<Component> toAdd = new List<Component>();
@@ -72,7 +72,7 @@ namespace Asteroids
                 clamper.Clamp(go);
 
 
-            Collision();
+            CheckCollisions();
 
             // Render();
 
@@ -91,7 +91,7 @@ namespace Asteroids
             //отрисовать
         }
 
-        public void Collision()
+        public void CheckCollisions()
         {
             //лучше for
             foreach (Collider a in ActiveObjects.OfType<Collider>())
@@ -100,11 +100,36 @@ namespace Asteroids
                 {
                     if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer))
                     {
-                        a.Process(b);
-                        b.Process(a);
+                        if (ShouldCollide(a.Transform, b.Transform))
+                        {
+                            a.Process(b);
+                            b.Process(a);
+                        }
                     }
                 }
             }
+        }
+
+        public static bool AnyOverlaps(Vector3 point, float radius, Layer layerMask)
+        {
+            var t = new Transform();
+            t.Position = point;
+            t.Scale = new Vector3() { X = radius, Y = radius, Z = radius };
+
+            foreach (Collider a in ActiveObjects.OfType<Collider>())
+                if (LayerSettings.ContainsKey(layerMask) && LayerSettings[layerMask].Any(x => x == a.CollisionLayer))
+                    return ShouldCollide(t, a.Transform);
+            return false;
+        }
+
+        public static bool ShouldCollide(Transform a, Transform b)
+        {
+            var dif = b.Position - a.Position;
+            var sizeSum = b.Scale * 0.5f + a.Scale * 0.5f;
+
+            if (sizeSum.X >= Vector3.Magnitude(dif) || sizeSum.Y >= Vector3.Magnitude(dif))
+                return true;
+            return false;
         }
 
         // public void Render()
