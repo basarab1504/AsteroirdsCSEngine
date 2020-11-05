@@ -7,6 +7,7 @@ namespace Asteroids
     {
         public float Speed { get; set; }
         private Gun Gun { get; set; }
+        private Thruster Thruster { get; set; }
         public Vector3 Direction { get; set; }
 
         // public void AddGun(Gun gun)
@@ -30,6 +31,10 @@ namespace Asteroids
         {
             base.Start();
             Gun = GetComponent<Gun>();
+            Thruster = GetComponent<Thruster>();
+
+            // Thruster.AddForce(Direction * Speed);
+            
             // Transform.Rotation = Vector3.Rotate(Transform.Rotation, 45);
         }
 
@@ -41,11 +46,12 @@ namespace Asteroids
             //     Direction = new Vector3(0, -1, 0);
             //сделать ввод с клавы
 
-            if (new Random().NextDouble() > 0.99f)
-                Gun.Shoot(Direction);
+            // if (new Random().NextDouble() > 0.99f)
+            //     Gun.Shoot(Direction);
             // Rotate(45);
 
-            Move(Direction * Speed * Game.DeltaTime);
+
+            // Move(Direction * Speed * Game.DeltaTime);
             // Transform.Position += Direction * Speed * Game.DeltaTime;
         }
     }

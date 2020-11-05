@@ -12,17 +12,20 @@ public class UnityShipFactory : UnityFactory<Ship>
     [SerializeField]
     private UnityLaserAmmoFactory laserFactory;
 
-
     public override Ship UnityCreate()
     {
         var a = Game.Create<Ship>();
+
+        var t = a.AddComponent<Thruster>();
+        t.LinearDrag = 0.9f;
+
         var c = a.AddComponent<Collider>();
         c.Transform.Scale = new Vector3(1, 1, 0);
         c.CollisionLayer = Layer.Player;
         c.OnCollision += a.Destroy;
 
         a.Transform.Scale = new Vector3(1, 1, 0);
-        a.Speed = 1;
+        a.Speed = 0.3f;
         a.Direction = new Vector3(1, 0, 0);
 
         var p = a.AddComponent<Gun>();
