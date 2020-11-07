@@ -36,8 +36,6 @@ namespace Asteroids
 
         public override void Start()
         {
-            System.Numerics.Vector2 a = new System.Numerics.Vector2(1, 0);
-
             base.Start();
             Commands = new List<Command>()
             {

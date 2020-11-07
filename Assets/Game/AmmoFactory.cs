@@ -2,7 +2,7 @@
 
 namespace Asteroids
 {
-    public class AmmoFactory : Factory<Ammo>
+    public class BulletFactory : Factory<Ammo>
     {
         public override Ammo CreateFrom(GameObject g)
         {

@@ -19,7 +19,6 @@ namespace Asteroids
         public void Shoot(Vector2 force)
         {
             this.direction = force;
-            // this.speed = force;
         }
 
         public override void Update()

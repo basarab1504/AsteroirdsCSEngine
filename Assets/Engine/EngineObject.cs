@@ -14,7 +14,7 @@ namespace Asteroids
 
         public virtual void OnCreate()
         {
-            SetActive(true);
+            // SetActive(true);
         }
 
         public virtual void OnDestroy()
@@ -22,9 +22,9 @@ namespace Asteroids
 
         }
 
-        //для инициализации созданных (создание компонентов - не здесь)
         public virtual void Start()
         {
+
         }
 
         public virtual void Update()
