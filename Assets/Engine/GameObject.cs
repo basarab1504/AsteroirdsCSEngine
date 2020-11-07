@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class GameObject : EngineObject
+    public sealed class GameObject : EngineObject
     {
         private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
@@ -22,8 +22,8 @@ namespace Asteroids
         {
             foreach (var component in components)
             {
-                component.Value.Parent = null;
                 component.Value.DestroyObject();
+                component.Value.Parent = null;
             }
             components.Clear();
             base.DestroyObject();
@@ -33,6 +33,12 @@ namespace Asteroids
         {
             base.OnCreate();
             Transform = AddComponent<Transform>();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            Game.OnScoreUp();
         }
 
         public void Rotate(float angle)

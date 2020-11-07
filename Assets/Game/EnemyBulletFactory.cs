@@ -10,7 +10,7 @@ namespace Asteroids
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(0.3f, 0.3f);
             c.CollisionLayer = Layer.BulletEnemy;
-            c.OnCollision += a.DestroyObject;
+            c.OnCollision += g.DestroyObject;
 
             a.Transform.Scale = new Vector2(0.3f, 0.3f);
             a.Lifetime = 25;

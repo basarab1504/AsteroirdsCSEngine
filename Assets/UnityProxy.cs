@@ -3,6 +3,7 @@ using UnityEngine;
 using Asteroids;
 using Transform = Asteroids.Transform;
 using GameObject = Asteroids.GameObject;
+using UnityEngine.UI;
 
 public class UnityProxy : MonoBehaviour
 {
@@ -18,32 +19,44 @@ public class UnityProxy : MonoBehaviour
     UnityFactory enemyShipFactory;
     [SerializeField]
     UnityFactory playerBulletsFactory;
+    [SerializeField]
+    Text scoreText;
+    [SerializeField]
+    Button restart;
 
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = targetFramerate;
+        Restart();
+    }
 
+    public void Restart()
+    {
         game = new Game();
+        Game.ScoreChanged += () => scoreText.text = Game.Score.ToString();
+        Game.GameStarted += () => restart.gameObject.SetActive(false);
+        Game.GameOver += () => restart.gameObject.SetActive(true);
         game.Init(new Vector2(10, 10), targetFramerate);
-        // Game.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
-        // Game.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
-        // Game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
-        // Game.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // var asteroidSpawner = Game.Create<GameObject>();
+        Game.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
+        Game.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
+        Game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
+        Game.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // var asteroidSpawnerTransform = asteroidSpawner.GetComponent<Transform>();
-        // asteroidSpawnerTransform.Position = new Vector2(0, 0);
-        // asteroidSpawnerTransform.Scale = new Vector2(10, 10);
-        // asteroidSpawnerTransform.Direction = new Vector2(0, 1);
+        var asteroidSpawner = Game.Create<GameObject>();
 
-        // var aSpawner = asteroidSpawner.AddComponent<CooldownSpawner<Asteroid>>();
-        // aSpawner.Cooldown = 150;
+        var asteroidSpawnerTransform = asteroidSpawner.GetComponent<Transform>();
+        asteroidSpawnerTransform.Position = new Vector2(0, 0);
+        asteroidSpawnerTransform.Scale = new Vector2(10, 10);
+        asteroidSpawnerTransform.Direction = new Vector2(0, 1);
 
-        // var af = new AsteroidFactory();
-        // af.Spawned += asteroidFactory.OnSpawn;
-        // aSpawner.Factory = af;
+        var aSpawner = asteroidSpawner.AddComponent<CooldownSpawner<Asteroid>>();
+        aSpawner.Cooldown = 150;
+
+        var af = new AsteroidFactory();
+        af.Spawned += asteroidFactory.OnSpawn;
+        aSpawner.Factory = af;
 
         // var enemyShipSpawner = Game.Create<GameObject>();
 

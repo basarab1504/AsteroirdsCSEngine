@@ -14,10 +14,12 @@ namespace Asteroids
             var t = g.AddComponent<Thruster>();
             t.LinearDrag = 0.9f;
 
+            g.AddComponent<Player>();
+
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(1, 1);
             c.CollisionLayer = Layer.Player;
-            c.OnCollision += a.DestroyObject;
+            c.OnCollision += g.DestroyObject;
 
             a.Transform.Scale = new Vector2(0.5f, 1);
             a.Speed = 0.02f;
