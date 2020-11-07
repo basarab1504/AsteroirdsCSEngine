@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class Spawner<T> : GameObject where T : GameObject
+    public class Spawner<T> : Component where T : Component
     {
         public IFactory<T> Factory { get; set; }
 
         public virtual void Spawn()
         {
             var spawned = Factory.Create();
-            spawned.Transform.Position = GetPosition();
+            Game.Instantiate<T>(GetPosition());
         }
 
         private Vector2 GetPosition()
@@ -37,7 +37,7 @@ namespace Asteroids
         }
     }
 
-    class CooldownSpawner<T> : Spawner<T> where T : GameObject
+    class CooldownSpawner<T> : Spawner<T> where T : Component
     {
         private float lastSpawnTick;
 

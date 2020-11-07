@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class Gun : GameObject
+    public class Gun : Component
     {
         public Pool<Ammo> AmmoBox { get; set; }
         public float Force { get; set; }
@@ -28,12 +28,6 @@ namespace Asteroids
                 ammo.Transform.Position = Transform.Position;
                 ammo.Shoot(Transform.Direction.normalized * Force);
             }
-            // if (currentCapacity > 0)
-            // {
-            //     Console.WriteLine("POS: " + Transform.Position.X + Transform.Position.Y);
-            //     var ammo = AmmoBox.Create();
-            //     ammo.Shoot(new Vector3(0, 1, 0) * Force); //добавить направление текущее у объекта
-            // }
         }
     }
 }

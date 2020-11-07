@@ -15,23 +15,43 @@ namespace Asteroids
         public static float DeltaTime => 1f / framerate;
 
         public static Dictionary<Layer, List<Layer>> LayerSettings { get; set; } = new Dictionary<Layer, List<Layer>>();
-        private static List<Component> objects = new List<Component>();
-        private static List<Component> ActiveObjects => objects.FindAll(x => x.Active);
-        private static List<Component> toAdd = new List<Component>();
-        private static List<Component> toStart = new List<Component>();
-        private static List<Component> toDestroy = new List<Component>();
+        private static List<EngineObject> objects = new List<EngineObject>();
+        private static List<EngineObject> ActiveObjects => objects.FindAll(x => x.Active);
+        private static List<EngineObject> toAdd = new List<EngineObject>();
+        private static List<EngineObject> toStart = new List<EngineObject>();
+        private static List<EngineObject> toDestroy = new List<EngineObject>();
 
-        public static T Create<T>() where T : Component, new()
+        public static T Create<T>() where T : EngineObject
         {
-            var created = new T();
+            var created = Activator.CreateInstance<T>();
             toAdd.Add(created);
             created.OnCreate();
             return created;
         }
 
-        public static void Destroy(Component Component)
+        public static T Instantiate<T>(T original, Vector2 pos) where T : Component
         {
-            toDestroy.Add(Component);
+            var created = new GameObject();
+
+            created.AddComponent<Transform>();
+
+            var transform = created.GetComponent<Transform>();
+            transform.Position = pos;
+            transform.Scale = new Vector2(1, 1);
+            transform.Direction = new Vector2(0, 1);
+
+            foreach (var a in original.Components)
+                created.AddComponent<T>();
+
+            // toAdd.Add(created);
+            // created.OnCreate();
+
+            // return created.GetComponent<T>();
+        }
+
+        public static void Destroy(EngineObject obj)
+        {
+            toDestroy.Add(obj);
         }
 
         public void Init(Vector2 size, int framerate)
@@ -39,17 +59,6 @@ namespace Asteroids
             clamper = new Clamper();
             clamper.AreaSize = size;
             Game.framerate = framerate;
-
-            // var asteroidSpawner = Create<CooldownSpawner<Asteroid>>();
-            // asteroidSpawner.Transform.Scale = clamper.AreaSize;
-            // asteroidSpawner.ToSpawnCount = 3;
-            // asteroidSpawner.Cooldown = 5;
-            // asteroidSpawner.Factory = new AsteroidFactory();
-
-            // var shipSpawner = Game.Create<Spawner<Ship>>();
-            // shipSpawner.ToSpawnCount = 1;
-            // shipSpawner.Factory = new ShipFactory();
-            // shipSpawner.Spawn();
         }
 
         public void Update()
@@ -133,40 +142,5 @@ namespace Asteroids
                 return true;
             return false;
         }
-
-        // public void Render()
-        // {
-        //     char[,] matrix = new char[(int)clamper.AreaSize.X, (int)clamper.AreaSize.X];
-
-        //     for (int i = 0; i < matrix.GetLength(0); i++)
-        //     {
-        //         for (int j = 0; j < matrix.GetLength(1); j++)
-        //         {
-        //             matrix[i, j] = '-';
-        //         }
-        //     }
-
-        //     int centerX = (int)Math.Ceiling(clamper.AreaSize.X * 0.5f) - 1;
-        //     int centerY = (int)Math.Ceiling(clamper.AreaSize.Y * 0.5f) - 1;
-
-        //     foreach (Render r in ActiveObjects.OfType<Render>())
-        //     {
-        //         int x = centerX + (int)Math.Ceiling(r.Parent.GetComponent<Transform>().Position.X * 0.5f);
-        //         int y = centerY + (int)Math.Ceiling(r.Parent.GetComponent<Transform>().Position.Y * 0.5f);
-        //         matrix[y, x] = r.Symbol;
-        //         Console.WriteLine(r.Symbol + " G" + r.Parent.GetComponent<Transform>().Position.X + " " + r.Parent.GetComponent<Transform>().Position.Y + " | " + "S" + x + " " + y);
-        //     }
-
-        //     for (int i = 0; i < matrix.GetLength(0); i++)
-        //     {
-        //         for (int j = 0; j < matrix.GetLength(1); j++)
-        //         {
-        //             Console.Write(matrix[i, j] + " ");
-        //         }
-        //         Console.WriteLine();
-        //     }
-
-        //     Console.WriteLine("=========");
-        // }
     }
 }

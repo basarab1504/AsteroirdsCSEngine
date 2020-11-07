@@ -4,87 +4,25 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public abstract class Component
+    public class Component : EngineObject
     {
-        public event Action<bool> ActiveStateChange;
-        public event Action Destroy;
+        public IEnumerable<Component> Components => Parent.Components;
+        public Transform Transform => Parent.Transform;
+        public GameObject Parent { get; set; }
 
-        private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
-        public IEnumerable<Component> Components => components.Values;
-        private Component parent;
-        private bool active;
-
-        public Component Parent => parent;
-
-        public bool Active => active;
-        public void SetActive(bool value)
+        public virtual T GetComponent<T>() where T : Component
         {
-            active = value;
-
-            foreach (var c in components.Values)
-                c.SetActive(value);
-
-            if (ActiveStateChange != null)
-                ActiveStateChange(active);
+            return Parent.GetComponent<T>();
         }
 
-        //для инициализаций начальных чтобы к иниц можно было обращаться (создание - здесь)
-        public virtual void OnCreate()
+        public virtual T AddComponent<T>() where T : Component, new()
         {
-            // SetActive(true);
+            return Parent.AddComponent<T>();
         }
 
-        public virtual void OnDestroy()
+        public virtual void RemoveComponent<T>() where T : Component
         {
-
-        }
-
-        //для инициализации созданных (создание компонентов - не здесь)
-        public virtual void Start()
-        {
-
-        }
-
-        public virtual void Update()
-        {
-
-        }
-
-        public T GetComponent<T>() where T : Component
-        {
-            if (components.ContainsKey(typeof(T)))
-                return (T)components[typeof(T)];
-            return null;
-        }
-
-        public T AddComponent<T>() where T : Component, new()
-        {
-            var created = Game.Create<T>();
-            components.Add(typeof(T), created);
-            created.parent = this;
-            return created;
-        }
-
-        public void RemoveComponent<T>() where T : Component
-        {
-            var component = components[typeof(T)];
-            component.parent = null;
-            components.Remove(typeof(T));
-            Game.Destroy(component);
-        }
-
-        public void DestroyComponent()
-        {
-            OnDestroy();
-            foreach (var component in components)
-            {
-                component.Value.parent = null;
-                component.Value.DestroyComponent();
-            }
-            components.Clear();
-            if (Destroy != null)
-                Destroy();
-            Game.Destroy(this);
+            Parent.RemoveComponent<T>();
         }
     }
 }

@@ -6,7 +6,6 @@ public class EnemyShip : Ship
 {
     public float VisibilityAngle { get; set; }
     public float VisibilityRadius { get; set; }
-    public float KeepDistance { get; set; }
 
     public override void Start()
     {
@@ -20,13 +19,13 @@ public class EnemyShip : Ship
             float signedAngle = Vector2.SignedAngle(Transform.Direction, hit - Transform.Position);
             if (Math.Abs(signedAngle) >= VisibilityAngle)
             {
-                Rotate(RotationSpeed * Mathf.Sign(signedAngle));
+                Parent.Rotate(RotationSpeed * Mathf.Sign(signedAngle));
             }
             var dir = hit - Transform.Position;
-            if (dir.magnitude > KeepDistance)
+            if (dir.magnitude > VisibilityRadius)
             {
                 var dirNorm = dir.normalized * Speed;
-                Move(dirNorm * Speed * Game.DeltaTime);
+                Parent.Move(dirNorm * Speed * Game.DeltaTime);
             }
             GetComponent<Gun>().Shoot();
         }

@@ -18,18 +18,19 @@ public class UnityProxy : MonoBehaviour
         Game.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
         Game.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
         Game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
+        Game.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // var asteroidSpawner = Game.Create<CooldownSpawner<Asteroid>>();
-        // asteroidSpawner.Transform.Scale = new Vector2(10, 10);
-        // asteroidSpawner.Cooldown = 50;
-        // asteroidSpawner.Factory = GetComponent<UnityAsteroidFactory>();
+        var asteroidSpawner = Game.Instantiate<CooldownSpawner<Asteroid>>(Vector2.zero);
+        asteroidSpawner.Transform.Scale = new Vector2(10, 10);
+        asteroidSpawner.Cooldown = 75;
+        asteroidSpawner.Factory = GetComponent<UnityAsteroidFactory>();
 
-        var enemyShipSpawner = Game.Create<CooldownSpawner<Ship>>();
+        var enemyShipSpawner = Game.Instantiate<CooldownSpawner<Ship>>(Vector2.zero);
         enemyShipSpawner.Transform.Scale = new Vector2(10, 10);
-        enemyShipSpawner.Cooldown = 150;
+        enemyShipSpawner.Cooldown = 250;
         enemyShipSpawner.Factory = GetComponent<UnityEnemyShipFactory>();
 
-        var shipSpawner = Game.Create<Spawner<Ship>>();
+        var shipSpawner = Game.Instantiate<Spawner<Ship>>(Vector2.zero);
         shipSpawner.Factory = GetComponent<UnityShipFactory>();
         shipSpawner.Spawn();
     }

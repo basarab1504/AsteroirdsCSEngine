@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class Ammo : GameObject, IPoolable
+    public class Ammo : Component, IPoolable
     {
         private Vector2 direction;
         private float actualLifetime;

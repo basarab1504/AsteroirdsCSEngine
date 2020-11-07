@@ -27,7 +27,7 @@ namespace Asteroids
         }
     }
 
-    public class Ship : GameObject
+    public class Ship : Component
     {
         public float Speed { get; set; }
         public float RotationSpeed { get; set; }
@@ -42,8 +42,8 @@ namespace Asteroids
             Commands = new List<Command>()
             {
                 new Command(() => Input.GetKey(KeyCode.UpArrow), () => GetComponent<Thruster>().AddForce(Transform.Direction.normalized * Speed)),
-                new Command(() => Input.GetKey(KeyCode.RightArrow), () => Rotate(-RotationSpeed)),
-                new Command(() => Input.GetKey(KeyCode.LeftArrow), () => Rotate(RotationSpeed)),
+                new Command(() => Input.GetKey(KeyCode.RightArrow), () => Parent.Rotate(-RotationSpeed)),
+                new Command(() => Input.GetKey(KeyCode.LeftArrow), () => Parent.Rotate(RotationSpeed)),
                 new Command(() => Input.GetKeyDown(KeyCode.LeftAlt), () => GetComponent<Gun>().Shoot()),
             };
         }

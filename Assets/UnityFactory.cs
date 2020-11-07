@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Asteroids;
 
-public abstract class UnityFactory<T> : MonoBehaviour, IFactory<T> where T : Asteroids.GameObject
+public abstract class UnityFactory<T> : MonoBehaviour, IFactory<T> where T : Asteroids.Component
 {
     [SerializeField]
     UnityObserver observer;
@@ -13,7 +13,7 @@ public abstract class UnityFactory<T> : MonoBehaviour, IFactory<T> where T : Ast
         var created = UnityCreate();
         // created.OnActiveStateChange += x => gameObject.SetActive(x);
         var instantiated = Instantiate(observer, created.Transform.Position, Quaternion.identity);
-        instantiated.asteroidsObject = created;
+        instantiated.asteroidsObject = created.Parent;
         return created;
     }
 

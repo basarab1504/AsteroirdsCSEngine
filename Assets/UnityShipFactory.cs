@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Asteroids;
 using Collider = Asteroids.Collider;
+using GameObject = Asteroids.GameObject;
 
 public class UnityShipFactory : UnityFactory<Ship>
 {
@@ -11,28 +12,30 @@ public class UnityShipFactory : UnityFactory<Ship>
 
     public override Ship UnityCreate()
     {
-        var a = Game.Create<Ship>();
+        var g = Game.Create<GameObject>();
+
+        var a = g.AddComponent<Ship>();
         a.RotationSpeed = 5;
 
-        var t = a.AddComponent<Thruster>();
+        var t = g.AddComponent<Thruster>();
         t.LinearDrag = 0.9f;
 
-        var c = a.AddComponent<Collider>();
+        var c = g.AddComponent<Collider>();
         c.Transform.Scale = new Vector2(1, 1);
         c.CollisionLayer = Layer.Player;
-        c.OnCollision += a.DestroyComponent;
+        c.OnCollision += a.DestroyObject;
 
         a.Transform.Scale = new Vector2(0.5f, 1);
         a.Speed = 0.02f;
 
-        var p = a.AddComponent<Gun>();
-        var am = p.AddComponent<Pool<Ammo>>();
-        p.BulletCount = 3;
+        var p = g.AddComponent<Gun>();
+        var am = g.AddComponent<Pool<Ammo>>();
+        p.BulletCount = 6;
         p.AmmoBox = am;
         p.SetAmmo(factory);
         p.Force = 10;
 
-        var r = a.AddComponent<Render>();
+        var r = g.AddComponent<Render>();
         r.Symbol = 'S';
 
         return a;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class Asteroid : GameObject
+    public class Asteroid : Component
     {
         public Vector3 Direction { get; set; }
         public float Speed { get; set; }
@@ -15,7 +15,7 @@ namespace Asteroids
 
         public override void Update()
         {
-            Move(Direction * Speed * Game.DeltaTime);
+            Parent.Move(Direction * Speed * Game.DeltaTime);
         }
 
         private void PushRandom()

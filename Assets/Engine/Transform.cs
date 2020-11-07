@@ -39,11 +39,11 @@ namespace Asteroids
         
         public Vector2 Scale { get; set; }
 
-        public override void OnCreate()
-        {
-            position = new Vector2();
-            Direction = new Vector2(0, 1);
-            Scale = new Vector2();
-        }
+        // public override void OnCreate()
+        // {
+        //     // position = new Vector2();
+        //     Direction = new Vector2(0, 1);
+        //     Scale = new Vector2();
+        // }
     }
 }

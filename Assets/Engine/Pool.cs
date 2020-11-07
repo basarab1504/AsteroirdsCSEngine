@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class Pool<T> : GameObject where T : Component, IPoolable
+    public class Pool<T> : Component where T : Component, IPoolable
     {
         private List<T> poolables = new List<T>();
 
@@ -39,7 +39,7 @@ namespace Asteroids
         {
             base.OnDestroy();
             foreach(var p in poolables)
-                p.DestroyComponent();
+                p.DestroyObject();
             poolables.Clear();
         }
     }
