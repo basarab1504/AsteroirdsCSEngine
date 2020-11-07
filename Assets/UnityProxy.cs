@@ -12,6 +12,10 @@ public class UnityProxy : MonoBehaviour
 
     [SerializeField]
     UnityFactory shipFactory;
+    [SerializeField]
+    UnityFactory asteroidFactory;
+    [SerializeField]
+    UnityFactory enemyShipFactory;
 
     // Start is called before the first frame update
     void Start()
@@ -25,38 +29,45 @@ public class UnityProxy : MonoBehaviour
         Game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Game.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // var asteroidSpawner = Game.Create<GameObject>().AddComponent<CooldownSpawner<Asteroid>>();
+        // var asteroidSpawner = Game.Create<GameObject>();
 
-        // var AStransform = asteroidSpawner.GetComponent<Transform>();
-        // AStransform.Position = new Vector2(0, 0);
-        // AStransform.Scale = new Vector2(1, 1);
-        // AStransform.Direction = new Vector2(0, 1);
+        // var asteroidSpawnerTransform = asteroidSpawner.GetComponent<Transform>();
+        // asteroidSpawnerTransform.Position = new Vector2(0, 0);
+        // asteroidSpawnerTransform.Scale = new Vector2(10, 10);
+        // asteroidSpawnerTransform.Direction = new Vector2(0, 1);
 
-        // asteroidSpawner.Transform.Scale = new Vector2(10, 10);
-        // asteroidSpawner.Cooldown = 75;
-        // asteroidSpawner.Factory = new AsteroidFactory();
+        // var aSpawner = asteroidSpawner.AddComponent<CooldownSpawner<Asteroid>>();
+        // aSpawner.Cooldown = 150;
 
-        // var enemyShipSpawner = Game.Create<GameObject>().AddComponent<CooldownSpawner<Ship>>();
+        // var af = new AsteroidFactory();
+        // af.Spawned += asteroidFactory.OnSpawn;
+        // aSpawner.Factory = af;
 
-        // var AStransform = enemyShipSpawner.GetComponent<Transform>();
-        // AStransform.Position = new Vector2(0, 0);
-        // AStransform.Scale = new Vector2(1, 1);
-        // AStransform.Direction = new Vector2(0, 1);
+        var enemyShipSpawner = Game.Create<GameObject>();
 
-        // enemyShipSpawner.Transform.Scale = new Vector2(10, 10);
-        // enemyShipSpawner.Cooldown = 250;
-        // enemyShipSpawner.Factory = new EnemyShipFactory();
+        var enemyShipSpawnerTransform = enemyShipSpawner.GetComponent<Transform>();
+        enemyShipSpawnerTransform.Position = new Vector2(0, 0);
+        enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
+        enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
+
+        var eSpawner = enemyShipSpawner.AddComponent<CooldownSpawner<EnemyShip>>();
+        eSpawner.Cooldown = 200;
+
+        var ef = new EnemyShipFactory();
+        ef.Spawned += enemyShipFactory.OnSpawn;
+        eSpawner.Factory = ef;
+        eSpawner.Spawn();
 
         var shipSpawner = Game.Create<GameObject>();
 
-        var AStransform = shipSpawner.GetComponent<Transform>();
-        AStransform.Position = new Vector2(0, 0);
-        AStransform.Scale = new Vector2(1, 1);
-        AStransform.Direction = new Vector2(0, 1);
+        var shipSpawnerTransform = shipSpawner.GetComponent<Transform>();
+        shipSpawnerTransform.Position = new Vector2(0, 0);
+        shipSpawnerTransform.Scale = new Vector2(1, 1);
+        shipSpawnerTransform.Direction = new Vector2(0, 1);
 
         var spawner = shipSpawner.AddComponent<Spawner<Ship>>();
 
-        spawner.Transform.Scale = new Vector2(10, 10);
+        spawner.Transform.Scale = new Vector2(2, 2);
         var sf = new ShipFactory();
         sf.Spawned += shipFactory.OnSpawn;
         spawner.Factory = sf;

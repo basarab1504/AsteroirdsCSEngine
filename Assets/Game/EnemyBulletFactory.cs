@@ -4,10 +4,8 @@ namespace Asteroids
 {
     public class EnemyBulletFactory : Factory<Ammo>
     {
-        public override Ammo CreateFrom(GameObject gameObject)
+        public override Ammo CreateFrom(GameObject g)
         {
-            var g = Game.Create<GameObject>();
-
             var a = g.AddComponent<Ammo>();
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(0.3f, 0.3f);

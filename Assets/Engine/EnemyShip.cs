@@ -6,6 +6,7 @@ public class EnemyShip : Ship
 {
     public float VisibilityAngle { get; set; }
     public float VisibilityRadius { get; set; }
+    public float DistanceToKeep { get; set; }
 
     public override void Start()
     {
@@ -22,12 +23,12 @@ public class EnemyShip : Ship
                 Parent.Rotate(RotationSpeed * Mathf.Sign(signedAngle));
             }
             var dir = hit - Transform.Position;
-            if (dir.magnitude > VisibilityRadius)
+            if (dir.magnitude > DistanceToKeep)
             {
                 var dirNorm = dir.normalized * Speed;
                 Parent.Move(dirNorm * Speed * Game.DeltaTime);
             }
-            GetComponent<Gun>().Shoot();
+            // GetComponent<Gun>().Shoot();
         }
     }
 }
