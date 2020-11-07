@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Asteroids;
-using Collider = Asteroids.Collider;
-using GameObject = Asteroids.GameObject;
+﻿using UnityEngine;
 
-public class UnityAsteroidFactory : UnityFactory<Asteroid>
+namespace Asteroids
 {
-    public override Asteroid UnityCreate()
+    public class AsteroidFactory : Factory<Asteroid>
+{
+    public override Asteroid CreateFrom(GameObject gameObject)
     {
         var g = Game.Create<GameObject>();
 
@@ -25,6 +22,6 @@ public class UnityAsteroidFactory : UnityFactory<Asteroid>
         r.Symbol = 'A';
         return a;
     }
-
-
 }
+}
+

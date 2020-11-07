@@ -14,7 +14,7 @@ namespace Asteroids
             AmmoBox = GetComponent<Pool<Ammo>>();
         }
 
-        public void SetAmmo(IFactory<Ammo> factory)
+        public void SetAmmo(Factory<Ammo> factory)
         {
             AmmoBox.Factory = factory;
             AmmoBox.RebuildPool(BulletCount);

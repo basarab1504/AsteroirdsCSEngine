@@ -4,12 +4,12 @@ namespace Asteroids
 {
     public class Spawner<T> : Component where T : Component
     {
-        public IFactory<T> Factory { get; set; }
+        public Factory<T> Factory { get; set; }
 
         public virtual void Spawn()
         {
             var spawned = Factory.Create();
-            Game.Instantiate<T>(GetPosition());
+            spawned.Transform.Position = GetPosition();
         }
 
         private Vector2 GetPosition()

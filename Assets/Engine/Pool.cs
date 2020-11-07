@@ -8,7 +8,7 @@ namespace Asteroids
     {
         private List<T> poolables = new List<T>();
 
-        public IFactory<T> Factory { get; set; }
+        public Factory<T> Factory { get; set; }
 
         public void RebuildPool(int size)
         {

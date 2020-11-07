@@ -15,6 +15,7 @@ namespace Asteroids
         public static float DeltaTime => 1f / framerate;
 
         public static Dictionary<Layer, List<Layer>> LayerSettings { get; set; } = new Dictionary<Layer, List<Layer>>();
+        // public static Dictionary<Type, object> Factories { get; set; } = new Dictionary<Type, object>();
         private static List<EngineObject> objects = new List<EngineObject>();
         private static List<EngineObject> ActiveObjects => objects.FindAll(x => x.Active);
         private static List<EngineObject> toAdd = new List<EngineObject>();
@@ -29,25 +30,25 @@ namespace Asteroids
             return created;
         }
 
-        public static T Instantiate<T>(T original, Vector2 pos) where T : Component
-        {
-            var created = new GameObject();
+        // public static T Instantiate<T>(T original, Vector2 pos) where T : Component
+        // {
+        //     var created = new GameObject();
 
-            created.AddComponent<Transform>();
+        //     created.AddComponent<Transform>();
 
-            var transform = created.GetComponent<Transform>();
-            transform.Position = pos;
-            transform.Scale = new Vector2(1, 1);
-            transform.Direction = new Vector2(0, 1);
+        //     var transform = created.GetComponent<Transform>();
+        //     transform.Position = pos;
+        //     transform.Scale = new Vector2(1, 1);
+        //     transform.Direction = new Vector2(0, 1);
 
-            foreach (var a in original.Components)
-                created.AddComponent<T>();
+        //     foreach (var a in original.Components)
+        //         created.AddComponent<T>();
 
-            // toAdd.Add(created);
-            // created.OnCreate();
+        //     // toAdd.Add(created);
+        //     // created.OnCreate();
 
-            // return created.GetComponent<T>();
-        }
+        //     // return created.GetComponent<T>();
+        // }
 
         public static void Destroy(EngineObject obj)
         {
