@@ -15,7 +15,7 @@ public class EnemyShip : Ship
 
     public override void Update()
     {
-        if (Game.AnyOverlaps(Transform.Position, VisibilityRadius, Layer.Player, out Vector2 hit))
+        if (Asteroids.Physics.AnyOverlaps(Transform.Position, VisibilityRadius, Layer.Player, out Vector2 hit))
         {
             float signedAngle = Vector2.SignedAngle(Transform.Direction, hit - Transform.Position);
             if (Math.Abs(signedAngle) >= VisibilityAngle)
@@ -26,7 +26,7 @@ public class EnemyShip : Ship
             if (dir.magnitude > DistanceToKeep)
             {
                 var dirNorm = dir.normalized * Speed;
-                Parent.Move(dirNorm * Speed * Game.DeltaTime);
+                Parent.Move(dirNorm * Speed * Asteroids.Time.DeltaTime);
             }
             // GetComponent<Gun>().Shoot();
         }

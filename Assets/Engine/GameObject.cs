@@ -9,7 +9,7 @@ namespace Asteroids
         private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
         public IEnumerable<Component> Components => components.Values;
-        public Transform Transform { get; set; }
+        public Transform Transform => GetComponent<Transform>();
 
         public sealed override void SetActive(bool value)
         {
@@ -32,13 +32,6 @@ namespace Asteroids
         public override void OnCreate()
         {
             base.OnCreate();
-            Transform = AddComponent<Transform>();
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            Game.OnScoreUp();
         }
 
         public void Rotate(float angle)
@@ -71,7 +64,7 @@ namespace Asteroids
             var component = components[typeof(T)];
             component.Parent = null;
             components.Remove(typeof(T));
-            Game.Destroy(component);
+            component.DestroyObject();
         }
     }
 }

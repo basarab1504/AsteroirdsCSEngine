@@ -16,7 +16,7 @@ namespace Asteroids
         {
             var go = Game.Create<GameObject>();
 
-            var transform = go.GetComponent<Transform>();
+            var transform = go.AddComponent<Transform>();
             transform.Position = new Vector2(0, 0);
             transform.Scale = new Vector2(1, 1);
             transform.Direction = new Vector2(0, 1);

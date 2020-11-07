@@ -6,10 +6,14 @@ namespace Asteroids
 {
     public abstract class EngineObject
     {
-        private bool active;
-
         public event Action Destroy;
+
+        private bool destroyed;
+
+        public bool Destroyed => destroyed;
         public event Action<bool> ActiveStateChange;
+
+        private bool active;
 
         public bool Active => active;
 
@@ -45,7 +49,7 @@ namespace Asteroids
             OnDestroy();
             if (Destroy != null)
                 Destroy();
-            Game.Destroy(this);
+            destroyed = true;
         }
     }
 }

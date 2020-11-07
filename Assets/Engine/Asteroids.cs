@@ -15,7 +15,7 @@ namespace Asteroids
 
         public override void Update()
         {
-            Parent.Move(Direction * Speed * Game.DeltaTime);
+            Parent.Move(Direction * Speed * Time.DeltaTime);
         }
 
         private void PushRandom()

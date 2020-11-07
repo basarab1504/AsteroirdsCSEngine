@@ -45,10 +45,10 @@ namespace Asteroids
 
         public override void Update()
         {
-            if (Game.Time > lastSpawnTick + Cooldown)
+            if (Time.CurrentTime > lastSpawnTick + Cooldown)
             {
                 Spawn();
-                lastSpawnTick = Game.Time;
+                lastSpawnTick = Time.CurrentTime;
             }
         }
     }

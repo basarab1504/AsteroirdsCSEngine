@@ -7,38 +7,34 @@ namespace Asteroids
 {
     class Game
     {
-        public static Action GameOver;
-        public static Action GameStarted;
-        public static event Action ScoreChanged;
+        public event Action GameOver;
+        public event Action GameStarted;
+        public event Action ScoreChanged;
 
-        private static float time;
         private Clamper clamper;
-        private static int framerate;
-        private static float score;
-        public static float Score => score;
+        private Time time;
+        private Physics physics;
+        private float score;
 
-        public static float Time => time;
-        public static float DeltaTime => 1f / framerate;
+        public float Score => score;
 
-        public static Dictionary<Layer, List<Layer>> LayerSettings { get; set; } = new Dictionary<Layer, List<Layer>>();
-        private static List<EngineObject> objects = new List<EngineObject>();
-        private static List<EngineObject> ActiveObjects => objects.FindAll(x => x.Active);
+        private List<EngineObject> objects = new List<EngineObject>();
         private static List<EngineObject> toAdd = new List<EngineObject>();
-        private static List<EngineObject> toStart = new List<EngineObject>();
-        private static List<EngineObject> toDestroy = new List<EngineObject>();
+        private List<EngineObject> toStart = new List<EngineObject>();
+        private List<EngineObject> ActiveObjects => objects.FindAll(x => x.Active && !x.Destroyed);
 
-        public static void OnScoreUp()
-        {
-            score++;
-            if (ScoreChanged != null)
-                ScoreChanged();
-        }
+        // public void OnScoreUp()
+        // {
+        //     score++;
+        //     if (ScoreChanged != null)
+        //         ScoreChanged();
+        // }
 
-        public static void OnGameOver()
-        {
-            if (GameOver != null)
-                GameOver();
-        }
+        // public void OnGameOver()
+        // {
+        //     if (GameOver != null)
+        //         GameOver();
+        // }
 
         public static T Create<T>() where T : EngineObject
         {
@@ -48,16 +44,12 @@ namespace Asteroids
             return created;
         }
 
-        public static void Destroy(EngineObject obj)
-        {
-            toDestroy.Add(obj);
-        }
-
         public void Init(Vector2 size, int framerate)
         {
             clamper = new Clamper();
             clamper.AreaSize = size;
-            Game.framerate = framerate;
+            time = new Time(framerate);
+            physics = new Physics(objects);
 
             if (GameStarted != null)
                 GameStarted();
@@ -82,67 +74,14 @@ namespace Asteroids
             foreach (GameObject go in ActiveObjects.OfType<GameObject>())
                 clamper.Clamp(go);
 
-
             foreach (var u in ActiveObjects)
                 u.Update();
 
-            CheckCollisions();
+            physics.CheckCollisions();
 
-            foreach (var de in toDestroy)
-                objects.Remove(de);
-            toDestroy.Clear();
+            objects.RemoveAll(x => x.Destroyed);
 
-            time++;
-        }
-
-        public void CheckCollisions()
-        {
-            //лучше for
-            foreach (Collider a in ActiveObjects.OfType<Collider>())
-            {
-                foreach (Collider b in ActiveObjects.OfType<Collider>().Where(x => x != a))
-                {
-                    if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer))
-                    {
-                        if (ShouldCollide(a.Transform, b.Transform))
-                        {
-                            a.Process(b);
-                            b.Process(a);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static bool AnyOverlaps(Vector2 point, float radius, Layer layerMask, out Vector2 hit)
-        {
-            var t = new Transform();
-            t.Position = point;
-            t.Scale = new Vector2() { x = radius, y = radius };
-
-            hit = new Vector2(0, 0);
-
-            if (LayerSettings.ContainsKey(layerMask))
-                foreach (Collider a in ActiveObjects.OfType<Collider>().Where(x => x.CollisionLayer == layerMask))
-                {
-                    if (ShouldCollide(t, a.Transform))
-                    {
-                        hit = a.Transform.Position;
-                        return true;
-                    }
-                }
-
-            return false;
-        }
-
-        public static bool ShouldCollide(Transform a, Transform b)
-        {
-            var dif = b.Position - a.Position;
-            var sizeSum = b.Scale * 0.5f + a.Scale * 0.5f;
-
-            if (sizeSum.x >= dif.magnitude || sizeSum.y >= dif.magnitude)
-                return true;
-            return false;
+            time.Update();
         }
     }
 }

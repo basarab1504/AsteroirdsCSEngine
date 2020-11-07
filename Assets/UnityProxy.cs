@@ -4,6 +4,7 @@ using Asteroids;
 using Transform = Asteroids.Transform;
 using GameObject = Asteroids.GameObject;
 using UnityEngine.UI;
+using Physics = Asteroids.Physics;
 
 public class UnityProxy : MonoBehaviour
 {
@@ -34,19 +35,19 @@ public class UnityProxy : MonoBehaviour
     public void Restart()
     {
         game = new Game();
-        Game.ScoreChanged += () => scoreText.text = Game.Score.ToString();
-        Game.GameStarted += () => restart.gameObject.SetActive(false);
-        Game.GameOver += () => restart.gameObject.SetActive(true);
+        game.ScoreChanged += () => scoreText.text = game.Score.ToString();
+        game.GameStarted += () => restart.gameObject.SetActive(false);
+        game.GameOver += () => restart.gameObject.SetActive(true);
         game.Init(new Vector2(10, 10), targetFramerate);
 
-        Game.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
-        Game.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
-        Game.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
-        Game.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
+        Physics.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
+        Physics.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
+        Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
+        Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
         var asteroidSpawner = Game.Create<GameObject>();
 
-        var asteroidSpawnerTransform = asteroidSpawner.GetComponent<Transform>();
+        var asteroidSpawnerTransform = asteroidSpawner.AddComponent<Transform>();
         asteroidSpawnerTransform.Position = new Vector2(0, 0);
         asteroidSpawnerTransform.Scale = new Vector2(10, 10);
         asteroidSpawnerTransform.Direction = new Vector2(0, 1);
@@ -58,29 +59,30 @@ public class UnityProxy : MonoBehaviour
         af.Spawned += asteroidFactory.OnSpawn;
         aSpawner.Factory = af;
 
-        // var enemyShipSpawner = Game.Create<GameObject>();
+        var enemyShipSpawner = Game.Create<GameObject>();
 
-        // var enemyShipSpawnerTransform = enemyShipSpawner.GetComponent<Transform>();
-        // enemyShipSpawnerTransform.Position = new Vector2(0, 0);
-        // enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
-        // enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
+        var enemyShipSpawnerTransform = enemyShipSpawner.AddComponent<Transform>();
+        enemyShipSpawnerTransform.Position = new Vector2(0, 0);
+        enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
+        enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
 
-        // var eSpawner = enemyShipSpawner.AddComponent<CooldownSpawner<EnemyShip>>();
-        // eSpawner.Cooldown = 200;
+        var eSpawner = enemyShipSpawner.AddComponent<CooldownSpawner<EnemyShip>>();
+        eSpawner.Cooldown = 200;
 
-        // var ef = new EnemyShipFactory();
-        // ef.Spawned += enemyShipFactory.OnSpawn;
-        // eSpawner.Factory = ef;
-        // eSpawner.Spawn();
+        var ef = new EnemyShipFactory();
+        ef.Spawned += enemyShipFactory.OnSpawn;
+        eSpawner.Factory = ef;
+        eSpawner.Spawn();
 
-        var shipSpawner = Game.Create<GameObject>();
+        var shipSpawnerGameObject = Game.Create<GameObject>();
 
-        var shipSpawnerTransform = shipSpawner.GetComponent<Transform>();
+        var shipSpawnerTransform = shipSpawnerGameObject.AddComponent<Transform>();
+
         shipSpawnerTransform.Position = new Vector2(0, 0);
         shipSpawnerTransform.Scale = new Vector2(1, 1);
         shipSpawnerTransform.Direction = new Vector2(0, 1);
 
-        var spawner = shipSpawner.AddComponent<Spawner<Ship>>();
+        var spawner = shipSpawnerGameObject.AddComponent<Spawner<Ship>>();
 
         spawner.Transform.Scale = new Vector2(2, 2);
         var sf = new ShipFactory();

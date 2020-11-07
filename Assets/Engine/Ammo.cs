@@ -26,7 +26,7 @@ namespace Asteroids
             actualLifetime--;
             if (actualLifetime <= 0)
                 SetActive(false);
-            Transform.Position += direction * Game.DeltaTime;
+            Transform.Position += direction * Time.DeltaTime;
         }
 
         public bool InUse()

@@ -5,7 +5,7 @@ namespace Asteroids
         public override void OnDestroy()
         {
             base.OnDestroy();
-            Game.OnGameOver();
+            // Game.OnGameOver();
         }
     }
 }
