@@ -47,21 +47,20 @@ public class UnityProxy : MonoBehaviour
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // var asteroidSpawner = Game.Create<GameObject>();
+        var asteroidSpawnerGameObject = Game.Create<GameObject>();
 
-        // var asteroidSpawnerTransform = asteroidSpawner.AddComponent<Transform>();
-        // asteroidSpawnerTransform.Position = new Vector2(0, 0);
-        // asteroidSpawnerTransform.Scale = new Vector2(10, 10);
-        // asteroidSpawnerTransform.Direction = new Vector2(0, 1);
+        var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
+        asteroidSpawnerTransform.Position = new Vector2(0, 0);
+        asteroidSpawnerTransform.Scale = new Vector2(10, 10);
+        asteroidSpawnerTransform.Direction = new Vector2(0, 1);
 
-        // var aSpawner = asteroidSpawner.AddComponent<CooldownSpawner<Asteroid>>();
-        // aSpawner.Cooldown = 150;
+        var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
+        asteroidSpawner.Cooldown = 150;
 
-        // var af = new AsteroidFactory();
-        // af.Spawned += asteroidFactory.OnSpawn;
-        // aSpawner.Factory = af;
+        var asteroidFactory = new AsteroidFactory();
+        asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
+        asteroidSpawner.Factory = asteroidFactory;
 
-        // var enemyShipSpawner = Game.Create<GameObject>();
 
         var enemyShipSpawnerGameObject = Game.Create<GameObject>();
 
