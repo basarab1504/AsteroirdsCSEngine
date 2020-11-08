@@ -4,8 +4,8 @@ namespace Asteroids
 {
     public class EnemyShipFactory : Factory<EnemyShip>
     {
-        // [SerializeField]
-        // private UnityEnemyBulletFactory factory;
+        [SerializeField]
+        private EnemyBulletFactory factory;
 
         public override EnemyShip CreateFrom(GameObject g)
         {
@@ -23,12 +23,12 @@ namespace Asteroids
             a.Transform.Scale = new Vector2(0.5f, 1);
             a.Speed = 1f;
 
-            // var p = g.AddComponent<Gun>();
-            // var am = p.AddComponent<Pool<Ammo>>();
-            // p.BulletCount = 3;
-            // p.AmmoBox = am;
-            // p.SetAmmo(new EnemyBulletFactory());
-            // p.Force = 6;
+            var p = g.AddComponent<Gun>();
+            var am = p.AddComponent<Pool<Ammo>>();
+            p.BulletCount = 3;
+            p.AmmoBox = am;
+            p.SetAmmo(new EnemyBulletFactory());
+            p.Force = 6;
 
             var r = g.AddComponent<Render>();
             r.Symbol = 'S';

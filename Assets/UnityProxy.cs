@@ -36,8 +36,8 @@ public class UnityProxy : MonoBehaviour
     {
         game = new Game();
         game.ScoreChanged += () => scoreText.text = game.Score.ToString();
-        game.GameStarted += () => restart.gameObject.SetActive(false);
-        game.GameOver += () => restart.gameObject.SetActive(true);
+        // game.GameStarted += () => restart.gameObject.SetActive(false);
+        // game.GameOver += () => restart.gameObject.SetActive(true);
         game.Init(new Vector2(10, 10), targetFramerate);
 
         Physics.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
@@ -59,20 +59,19 @@ public class UnityProxy : MonoBehaviour
         af.Spawned += asteroidFactory.OnSpawn;
         aSpawner.Factory = af;
 
-        var enemyShipSpawner = Game.Create<GameObject>();
+        // var enemyShipSpawner = Game.Create<GameObject>();
 
-        var enemyShipSpawnerTransform = enemyShipSpawner.AddComponent<Transform>();
-        enemyShipSpawnerTransform.Position = new Vector2(0, 0);
-        enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
-        enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
+        // var enemyShipSpawnerTransform = enemyShipSpawner.AddComponent<Transform>();
+        // enemyShipSpawnerTransform.Position = new Vector2(0, 0);
+        // enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
+        // enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
 
-        var eSpawner = enemyShipSpawner.AddComponent<CooldownSpawner<EnemyShip>>();
-        eSpawner.Cooldown = 200;
+        // var eSpawner = enemyShipSpawner.AddComponent<CooldownSpawner<EnemyShip>>();
+        // eSpawner.Cooldown = 200;
 
-        var ef = new EnemyShipFactory();
-        ef.Spawned += enemyShipFactory.OnSpawn;
-        eSpawner.Factory = ef;
-        eSpawner.Spawn();
+        // var ef = new EnemyShipFactory();
+        // ef.Spawned += enemyShipFactory.OnSpawn;
+        // eSpawner.Factory = ef;
 
         var shipSpawnerGameObject = Game.Create<GameObject>();
 
@@ -86,7 +85,7 @@ public class UnityProxy : MonoBehaviour
 
         spawner.Transform.Scale = new Vector2(2, 2);
         var sf = new ShipFactory();
-        var bf = new BulletFactory();
+        var bf = new PlayerBulletFactory();
         bf.Spawned += playerBulletsFactory.OnSpawn;
         sf.BulletFactory = bf;
         sf.Spawned += shipFactory.OnSpawn;

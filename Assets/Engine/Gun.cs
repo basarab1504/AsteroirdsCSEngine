@@ -25,7 +25,6 @@ namespace Asteroids
             Ammo ammo;
             if (AmmoBox.TryGetPoolable(out ammo))
             {
-                ammo.Transform.Position = Transform.Position;
                 ammo.Shoot(Transform.Direction.normalized * Force);
             }
         }

@@ -37,7 +37,7 @@ namespace Asteroids
         public void Reset()
         {
             actualLifetime = Lifetime;
-            SetActive(true);
+            Parent.SetActive(true);
         }
     }
 }

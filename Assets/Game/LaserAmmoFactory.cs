@@ -2,7 +2,7 @@
 
 namespace Asteroids
 {
-    public class UnityLaserAmmoFactory : Factory<Ammo>
+    public class PlayerLaserAmmoFactory : Factory<Ammo>
     {
         public override Ammo CreateFrom(GameObject g)
         {

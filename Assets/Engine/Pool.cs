@@ -27,6 +27,7 @@ namespace Asteroids
             foreach (var p in poolables)
                 if (!p.InUse())
                 {
+                    p.Transform.Position = Transform.Position;
                     p.Reset();
                     poolable = p;
                     return true;

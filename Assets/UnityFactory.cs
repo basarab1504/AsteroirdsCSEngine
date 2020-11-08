@@ -11,8 +11,8 @@ public class UnityFactory : MonoBehaviour
 
     public void OnSpawn(Component spawned)
     {
-        spawned.ActiveStateChange += x => gameObject.SetActive(x);
         var instantiated = Instantiate(observer, spawned.Transform.Position, Quaternion.identity);
+        spawned.ActiveStateChange += x => instantiated.gameObject.SetActive(x);
         instantiated.asteroidsObject = spawned.Parent;
     }
 }
