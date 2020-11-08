@@ -31,9 +31,6 @@ namespace Asteroids
             p.SetAmmo(BulletFactory);
             p.Force = 10;
 
-            var r = g.AddComponent<Render>();
-            r.Symbol = 'S';
-
             return a;
         }
     }

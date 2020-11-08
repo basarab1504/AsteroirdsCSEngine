@@ -55,7 +55,6 @@ namespace Asteroids
         {
             var created = Game.Create<T>();
             components.Add(typeof(T), created);
-            // created.ActiveStateChange += x => SetActive(x);
             created.Parent = this;
             return created;
         }

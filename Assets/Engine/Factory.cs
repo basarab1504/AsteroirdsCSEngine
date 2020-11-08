@@ -12,12 +12,12 @@ namespace Asteroids
     {
         public event Action<T> Spawned;
 
-        public T Create()
+        public T Create(Vector2 pos)
         {
             var go = Game.Create<GameObject>();
 
             var transform = go.AddComponent<Transform>();
-            transform.Position = new Vector2(0, 0);
+            transform.Position = pos;
             transform.Scale = new Vector2(1, 1);
             transform.Direction = new Vector2(0, 1);
 

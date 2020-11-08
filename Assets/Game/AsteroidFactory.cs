@@ -12,12 +12,12 @@ namespace Asteroids
             c.CollisionLayer = Layer.Asteroid;
             c.OnCollision += g.DestroyObject;
 
+            g.AddComponent<Scorable>().Score = 5;
+
             a.Transform.Scale = new Vector2(1, 1);
             a.Speed = 1;
             a.Direction = new Vector2(0, 1);
 
-            var r = g.AddComponent<Render>();
-            r.Symbol = 'A';
             return a;
         }
     }

@@ -8,8 +8,7 @@ namespace Asteroids
 
         public virtual void Spawn()
         {
-            var spawned = Factory.Create();
-            spawned.Transform.Position = GetPosition();
+            var spawned = Factory.Create(GetPosition());
         }
 
         private Vector2 GetPosition()

@@ -16,9 +16,6 @@ namespace Asteroids
             a.Transform.Scale = new Vector2(0.4f, 0.4f);
             a.Lifetime = 50;
 
-            var r = g.AddComponent<Render>();
-            r.Symbol = 'B';
-
             return a;
         }
     }

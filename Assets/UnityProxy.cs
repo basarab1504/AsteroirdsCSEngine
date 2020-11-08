@@ -8,6 +8,8 @@ using Physics = Asteroids.Physics;
 
 public class UnityProxy : MonoBehaviour
 {
+    public static bool Is2D;
+
     [SerializeField]
     int targetFramerate;
     Game game;
@@ -26,21 +28,34 @@ public class UnityProxy : MonoBehaviour
     Text scoreText;
     [SerializeField]
     Button restart;
+    [SerializeField]
+    Button changeGraphics;
 
     // Start is called before the first frame update
     void Start()
     {
+        Is2D = true;
         Application.targetFrameRate = targetFramerate;
         Restart();
+        changeGraphics.onClick.AddListener(() => Is2D = !Is2D);
     }
 
     public void Restart()
     {
+        unityPlayerShipFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
+        unityAsteroidFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
+        unityEnemyShipFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
+        unityEnemyBulletFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
+        unityPlayerBulletsFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
+
         game = new Game();
         game.ScoreChanged += () => scoreText.text = game.Score.ToString();
-        // game.GameStarted += () => restart.gameObject.SetActive(false);
-        // game.GameOver += () => restart.gameObject.SetActive(true);
+
+        game.GameStarted += () => restart.gameObject.SetActive(false);
+        game.GameOver += () => restart.gameObject.SetActive(true);
+
         game.Init(new Vector2(10, 10), targetFramerate);
+
 
         Physics.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
         Physics.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
@@ -80,8 +95,6 @@ public class UnityProxy : MonoBehaviour
         enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
 
         enemyShipSpawnerComponent.Factory = enemyShipFactory;
-
-        enemyShipSpawnerComponent.Spawn();
 
 
         var shipSpawnerGameObject = Game.Create<GameObject>();

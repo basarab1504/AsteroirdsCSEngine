@@ -23,19 +23,6 @@ namespace Asteroids
         private List<EngineObject> toStart = new List<EngineObject>();
         private List<EngineObject> ActiveObjects => objects.FindAll(x => x.Active && !x.Destroyed);
 
-        // public void OnScoreUp()
-        // {
-        //     score++;
-        //     if (ScoreChanged != null)
-        //         ScoreChanged();
-        // }
-
-        // public void OnGameOver()
-        // {
-        //     if (GameOver != null)
-        //         GameOver();
-        // }
-
         public static T Create<T>() where T : EngineObject
         {
             var created = Activator.CreateInstance<T>();
@@ -50,13 +37,14 @@ namespace Asteroids
             clamper.AreaSize = size;
             time = new Time(framerate);
             physics = new Physics(objects);
-
-            if (GameStarted != null)
-                GameStarted();
+            OnGameStarted();
         }
 
         public void Update()
         {
+            foreach (var s in toAdd.OfType<Scorable>())
+                s.Destroy += () => OnScoreChanged(s.Score);
+                
             foreach (var i in toAdd)
             {
                 toStart.Add(i);
@@ -82,6 +70,27 @@ namespace Asteroids
             objects.RemoveAll(x => x.Destroyed);
 
             time.Update();
+        }
+
+        private void OnScoreChanged(int toAdd)
+        {
+            score += toAdd;
+            ScoreChanged();
+        }
+
+        private void OnGameStarted()
+        {
+            if (GameStarted != null)
+                GameStarted();
+        }
+
+        private void OnGameOver()
+        {
+            if (GameOver != null)
+                GameOver();
+
+            // foreach (var o in objects)
+            //     o.DestroyObject();
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Asteroids
             a.DistanceToKeep = 3;
             a.RotationSpeed = 5;
 
+            g.AddComponent<Scorable>().Score = 10;
+
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(1, 1);
             c.CollisionLayer = Layer.EnemyShip;
@@ -28,9 +30,6 @@ namespace Asteroids
             p.AmmoBox = am;
             p.SetAmmo(BulletFactory);
             p.Force = 6;
-
-            var r = g.AddComponent<Render>();
-            r.Symbol = 'S';
 
             return a;
         }
