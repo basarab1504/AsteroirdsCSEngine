@@ -42,6 +42,8 @@ public class UnityProxy : MonoBehaviour
 
     public void Restart()
     {
+        scoreText.text = "0";
+
         unityPlayerShipFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
         unityAsteroidFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
         unityEnemyShipFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);

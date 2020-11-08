@@ -43,7 +43,7 @@ namespace Asteroids
         public void Update()
         {
             foreach (var s in toAdd.OfType<Scorable>())
-                s.Destroy += () => OnScoreChanged(s.Score);
+                s.Scored += () => OnScoreChanged(s.Score);
                 
             foreach (var i in toAdd)
             {
@@ -67,6 +67,9 @@ namespace Asteroids
 
             physics.CheckCollisions();
 
+            if (objects.OfType<Player>().Any(x => x.Destroyed))
+                OnGameOver();
+
             objects.RemoveAll(x => x.Destroyed);
 
             time.Update();
@@ -89,8 +92,8 @@ namespace Asteroids
             if (GameOver != null)
                 GameOver();
 
-            // foreach (var o in objects)
-            //     o.DestroyObject();
+            foreach(var o in objects)
+                o.DestroyObject();
         }
     }
 }

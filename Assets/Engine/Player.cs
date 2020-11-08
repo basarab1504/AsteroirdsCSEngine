@@ -1,5 +1,4 @@
 namespace Asteroids
 {
-    public class Player : Component
-    { }
+    public class Player : Component { }
 }
