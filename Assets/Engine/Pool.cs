@@ -39,8 +39,10 @@ namespace Asteroids
         public override void OnDestroy()
         {
             base.OnDestroy();
+
             foreach(var p in poolables)
-                p.DestroyObject();
+                p.Parent.DestroyObject();
+
             poolables.Clear();
         }
     }

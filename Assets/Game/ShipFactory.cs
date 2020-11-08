@@ -2,7 +2,7 @@
 
 namespace Asteroids
 {
-    public class ShipFactory : Factory<Ship>
+    public class PlayerShipFactory : Factory<Ship>
     {
         public Factory<Ammo> BulletFactory { get; set; }
 

@@ -9,6 +9,7 @@ public class UnityObserver : MonoBehaviour
     {
         asteroidsObject.ActiveStateChange += x => gameObject.SetActive(x);
         asteroidsObject.Destroy += () => gameObject.SetActive(false);
+        // asteroidsObject.Destroy += () => Debug.Log(name);
         transform.position = asteroidsObject.Transform.Position;
         transform.localScale = asteroidsObject.Transform.Scale;
     }

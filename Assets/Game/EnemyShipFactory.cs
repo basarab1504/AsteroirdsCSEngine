@@ -4,8 +4,7 @@ namespace Asteroids
 {
     public class EnemyShipFactory : Factory<EnemyShip>
     {
-        [SerializeField]
-        private EnemyBulletFactory factory;
+        public Factory<Ammo> BulletFactory { get; set; }
 
         public override EnemyShip CreateFrom(GameObject g)
         {
@@ -27,7 +26,7 @@ namespace Asteroids
             var am = p.AddComponent<Pool<Ammo>>();
             p.BulletCount = 3;
             p.AmmoBox = am;
-            p.SetAmmo(new EnemyBulletFactory());
+            p.SetAmmo(BulletFactory);
             p.Force = 6;
 
             var r = g.AddComponent<Render>();
