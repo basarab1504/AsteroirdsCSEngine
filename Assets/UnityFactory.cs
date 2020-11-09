@@ -7,8 +7,6 @@ using Component = Asteroids.Component;
 
 public class UnityFactory : MonoBehaviour
 {
-    public Action<UnityObserver> Instantiated;
-
     [SerializeField]
     UnityObserver observer;
 
@@ -18,8 +16,5 @@ public class UnityFactory : MonoBehaviour
         spawned.ActiveStateChange += x => instantiated.gameObject.SetActive(x);
         spawned.Destroy += () => Destroy(instantiated.gameObject);
         instantiated.asteroidsObject = spawned.Parent;
-
-        if (Instantiated != null)
-            Instantiated(instantiated);
     }
 }

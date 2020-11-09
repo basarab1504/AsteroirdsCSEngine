@@ -8,8 +8,6 @@ using Physics = Asteroids.Physics;
 
 public class UnityProxy : MonoBehaviour
 {
-    public static bool Is2D;
-
     [SerializeField]
     int targetFramerate;
     Game game;
@@ -36,21 +34,14 @@ public class UnityProxy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Is2D = true;
         Application.targetFrameRate = targetFramerate;
         Restart();
-        changeGraphics.onClick.AddListener(() => Is2D = !Is2D);
+        changeGraphics.onClick.AddListener(game.ChangeMode);
     }
 
     public void Restart()
     {
         scoreText.text = "0";
-
-        unityPlayerShipFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
-        unityAsteroidFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
-        unityEnemyShipFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
-        unityEnemyBulletFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
-        unityPlayerBulletsFactory.Instantiated += x => changeGraphics.onClick.AddListener(x.OnChangeGraphics);
 
         game = new Game();
         game.ScoreChanged += () => scoreText.text = game.Score.ToString();
@@ -66,40 +57,39 @@ public class UnityProxy : MonoBehaviour
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // var asteroidSpawnerGameObject = Game.Create<GameObject>();
+        var asteroidSpawnerGameObject = Game.Create<GameObject>();
 
-        // var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
-        // asteroidSpawnerTransform.Position = new Vector2(0, 0);
-        // asteroidSpawnerTransform.Scale = new Vector2(10, 10);
-        // asteroidSpawnerTransform.Direction = new Vector2(0, 1);
+        var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
+        asteroidSpawnerTransform.Position = new Vector2(0, 0);
+        asteroidSpawnerTransform.Scale = new Vector2(10, 10);
+        asteroidSpawnerTransform.Direction = new Vector2(0, 1);
 
-        // var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
-        // asteroidSpawner.Cooldown = 150;
+        var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
+        asteroidSpawner.Cooldown = 150;
 
-        // var asteroidFactory = new AsteroidFactory();
-        // asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
-        // asteroidSpawner.Factory = asteroidFactory;
+        var asteroidFactory = new AsteroidFactory();
+        asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
+        asteroidSpawner.Factory = asteroidFactory;
 
 
-        // var enemyShipSpawnerGameObject = Game.Create<GameObject>();
+        var enemyShipSpawnerGameObject = Game.Create<GameObject>();
 
-        // var enemyShipSpawnerTransform = enemyShipSpawnerGameObject.AddComponent<Transform>();
-        // enemyShipSpawnerTransform.Position = new Vector2(0, 0);
-        // enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
-        // enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
+        var enemyShipSpawnerTransform = enemyShipSpawnerGameObject.AddComponent<Transform>();
+        enemyShipSpawnerTransform.Position = new Vector2(0, 0);
+        enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
+        enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
 
-        // var enemyShipSpawnerComponent = enemyShipSpawnerGameObject.AddComponent<CooldownSpawner<EnemyShip>>();
-        // enemyShipSpawnerComponent.Cooldown = 200;
+        var enemyShipSpawnerComponent = enemyShipSpawnerGameObject.AddComponent<CooldownSpawner<EnemyShip>>();
+        enemyShipSpawnerComponent.Cooldown = 200;
 
-        // var enemyShipFactory = new EnemyShipFactory();
-        // var enemyPlayerBulletFactory = new EnemyBulletFactory();
+        var enemyShipFactory = new EnemyShipFactory();
+        var enemyPlayerBulletFactory = new EnemyBulletFactory();
 
-        // enemyPlayerBulletFactory.Spawned += unityEnemyBulletFactory.OnSpawn;
-        // enemyShipFactory.BulletFactory = enemyPlayerBulletFactory;
-        // enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
+        enemyPlayerBulletFactory.Spawned += unityEnemyBulletFactory.OnSpawn;
+        enemyShipFactory.BulletFactory = enemyPlayerBulletFactory;
+        enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
 
-        // enemyShipSpawnerComponent.Factory = enemyShipFactory;
-
+        enemyShipSpawnerComponent.Factory = enemyShipFactory;
 
         var shipSpawnerGameObject = Game.Create<GameObject>();
 

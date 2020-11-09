@@ -8,7 +8,7 @@ namespace Asteroids
     {
         public static Dictionary<Layer, List<Layer>> LayerSettings { get; set; }
         private static List<EngineObject> objects;
-        private static IEnumerable<Collider> Colliders => objects.OfType<Collider>();
+        private static IEnumerable<Collider> ActiveColliders => objects.OfType<Collider>().Where(x => x.Active && !x.Destroyed);
 
         public Physics(List<EngineObject> objects)
         {
@@ -19,9 +19,9 @@ namespace Asteroids
         public void CheckCollisions()
         {
             //лучше for
-            foreach (var a in Colliders.Where(x => x.Active && !x.Destroyed))
+            foreach (var a in ActiveColliders)
             {
-                foreach (var b in Colliders.Where(x => x != a && x.Active && !x.Destroyed))
+                foreach (var b in ActiveColliders.Where(x => x != a))
                 {
                     if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer) && Physics.ShouldCollide(a.Transform, b.Transform))
                     {
@@ -41,7 +41,7 @@ namespace Asteroids
             hit = new Vector2(0, 0);
 
             if (LayerSettings.ContainsKey(layerMask))
-                foreach (var a in Colliders.Where(x => x.CollisionLayer == layerMask))
+                foreach (var a in ActiveColliders.Where(x => x.CollisionLayer == layerMask))
                 {
                     if (ShouldCollide(t, a.Transform))
                     {

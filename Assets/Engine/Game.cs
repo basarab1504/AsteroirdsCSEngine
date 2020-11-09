@@ -7,6 +7,10 @@ namespace Asteroids
 {
     class Game
     {
+        private static Graphics mode = Graphics.TwoDimension;
+        public static Graphics Mode => mode;
+
+        public static event Action GraphicsChanged;
         public event Action GameOver;
         public event Action GameStarted;
         public event Action ScoreChanged;
@@ -40,11 +44,20 @@ namespace Asteroids
             OnGameStarted();
         }
 
+        public void ChangeMode()
+        {
+            if (mode == Graphics.TwoDimension)
+                mode = Graphics.ThreeDimension;
+            else
+                mode = Graphics.TwoDimension;
+            GraphicsChanged();
+        }
+
         public void Update()
         {
             foreach (var s in toAdd.OfType<Scorable>())
                 s.Scored += () => OnScoreChanged(s.Score);
-                
+
             foreach (var i in toAdd)
             {
                 toStart.Add(i);
@@ -92,7 +105,7 @@ namespace Asteroids
             if (GameOver != null)
                 GameOver();
 
-            foreach(var o in objects)
+            foreach (var o in objects)
                 o.DestroyObject();
         }
     }

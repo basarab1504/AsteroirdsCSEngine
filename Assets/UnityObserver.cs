@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Asteroids;
 using UnityEngine;
-using UnityEngine.Events;
+using Graphics = Asteroids.Graphics;
 
 public class UnityObserver : MonoBehaviour
 {
@@ -12,41 +12,48 @@ public class UnityObserver : MonoBehaviour
     private Material material;
     [SerializeField]
     private Color color;
-
     public Asteroids.GameObject asteroidsObject;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        OnChangeGraphics();
+        CheckGraphics();
         asteroidsObject.ActiveStateChange += x => transform.position = asteroidsObject.Transform.Position;
         asteroidsObject.ActiveStateChange += x => gameObject.SetActive(x);
         asteroidsObject.Destroy += () => Destroy(gameObject);
+        asteroidsObject.Destroy += () => Game.GraphicsChanged -= CheckGraphics;
+        Game.GraphicsChanged += CheckGraphics;
         transform.position = asteroidsObject.Transform.Position;
         transform.localScale = asteroidsObject.Transform.Scale;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         transform.position = asteroidsObject.Transform.Position;
         transform.rotation = Quaternion.LookRotation(transform.forward, asteroidsObject.Transform.Direction.normalized);
     }
 
-    public void OnChangeGraphics()
+    private void CheckGraphics()
     {
-        // if (UnityProxy.Is2D)
-        // {
-        //     // DestroyImmediate(GetComponent<MeshRenderer>());
-        //     // DestroyImmediate(GetComponent<MeshFilter>());
-        //     // gameObject.AddComponent<SpriteRenderer>().sprite = sprite;
-        //     // gameObject.GetComponent<SpriteRenderer>().color = color;
-        // }
-        // else
-        // {
-        //     DestroyImmediate(GetComponent<SpriteRenderer>());
-        //     gameObject.AddComponent<MeshFilter>().mesh = mesh;
-        //     gameObject.AddComponent<MeshRenderer>().material = material;
-        // }
+        if (Game.Mode == Graphics.TwoDimension && gameObject.GetComponent<SpriteRenderer>() == null || Game.Mode == Graphics.ThreeDimension && gameObject.GetComponent<MeshRenderer>() == null)
+            ChangeGraphics();
+    }
+
+    private void ChangeGraphics()
+    {
+        if (Game.Mode == Asteroids.Graphics.TwoDimension)
+        {
+            DestroyImmediate(GetComponent<MeshRenderer>());
+            DestroyImmediate(GetComponent<MeshFilter>());
+            gameObject.AddComponent<SpriteRenderer>().sprite = sprite;
+            gameObject.GetComponent<SpriteRenderer>().color = color;
+        }
+        else
+        {
+            DestroyImmediate(GetComponent<SpriteRenderer>());
+            gameObject.AddComponent<MeshFilter>().mesh = mesh;
+            gameObject.AddComponent<MeshRenderer>().material = material;
+        }
     }
 }
