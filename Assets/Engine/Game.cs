@@ -36,6 +36,7 @@ namespace Asteroids
 
         public void Init(Vector2 size, int framerate)
         {
+            toAdd.Clear();
             clamper = new Clamper();
             clamper.AreaSize = size;
             time = new Time(framerate);
