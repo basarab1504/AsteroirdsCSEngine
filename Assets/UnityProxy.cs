@@ -39,39 +39,38 @@ public class UnityProxy : MonoBehaviour
         changeGraphics.onClick.AddListener(game.ChangeMode);
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        game.Update();
+    }
+
     public void Restart()
     {
         scoreText.text = "0";
 
         game = new Game();
+        
         game.ScoreChanged += () => scoreText.text = game.Score.ToString();
-
         game.GameStarted += () => restart.gameObject.SetActive(false);
         game.GameOver += () => restart.gameObject.SetActive(true);
 
         game.Init(new Vector2(10, 10), targetFramerate);
-
 
         Physics.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
         Physics.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        var asteroidSpawnerGameObject = Game.Create<GameObject>();
+        CreateEnemyShipSpawner();
+        CreateAsteroidSpawner();
 
-        var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
-        asteroidSpawnerTransform.Position = new Vector2(0, 0);
-        asteroidSpawnerTransform.Scale = new Vector2(10, 10);
-        asteroidSpawnerTransform.Direction = new Vector2(0, 1);
+        var shipSpawner = CreatePlayerShipSpawner();
+        shipSpawner.Spawn();
+    }
 
-        var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
-        asteroidSpawner.Cooldown = 150;
-
-        var asteroidFactory = new AsteroidFactory();
-        asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
-        asteroidSpawner.Factory = asteroidFactory;
-
-
+    private void CreateEnemyShipSpawner()
+    {
         var enemyShipSpawnerGameObject = Game.Create<GameObject>();
 
         var enemyShipSpawnerTransform = enemyShipSpawnerGameObject.AddComponent<Transform>();
@@ -90,7 +89,27 @@ public class UnityProxy : MonoBehaviour
         enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
 
         enemyShipSpawnerComponent.Factory = enemyShipFactory;
+    }
 
+    private void CreateAsteroidSpawner()
+    {
+        var asteroidSpawnerGameObject = Game.Create<GameObject>();
+
+        var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
+        asteroidSpawnerTransform.Position = new Vector2(0, 0);
+        asteroidSpawnerTransform.Scale = new Vector2(10, 10);
+        asteroidSpawnerTransform.Direction = new Vector2(0, 1);
+
+        var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
+        asteroidSpawner.Cooldown = 150;
+
+        var asteroidFactory = new AsteroidFactory();
+        asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
+        asteroidSpawner.Factory = asteroidFactory;
+    }
+
+    private Spawner<Ship> CreatePlayerShipSpawner()
+    {
         var shipSpawnerGameObject = Game.Create<GameObject>();
 
         var shipSpawnerTransform = shipSpawnerGameObject.AddComponent<Transform>();
@@ -114,12 +133,6 @@ public class UnityProxy : MonoBehaviour
 
         shipSpawnerComponent.Factory = shipFactory;
 
-        shipSpawnerComponent.Spawn();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        game.Update();
+        return shipSpawnerComponent;
     }
 }

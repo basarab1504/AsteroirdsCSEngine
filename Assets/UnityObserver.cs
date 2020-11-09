@@ -18,11 +18,13 @@ public class UnityObserver : MonoBehaviour
     private void Start()
     {
         CheckGraphics();
+
         asteroidsObject.ActiveStateChange += x => transform.position = asteroidsObject.Transform.Position;
         asteroidsObject.ActiveStateChange += x => gameObject.SetActive(x);
         asteroidsObject.Destroy += () => Destroy(gameObject);
         Game.GraphicsChanged += CheckGraphics;
         asteroidsObject.Destroy += () => Game.GraphicsChanged -= CheckGraphics;
+        
         transform.position = asteroidsObject.Transform.Position;
         transform.localScale = new Vector3(asteroidsObject.Transform.Scale.x, asteroidsObject.Transform.Scale.y, 1);
     }
