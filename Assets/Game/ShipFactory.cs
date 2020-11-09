@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -31,6 +32,15 @@ namespace Asteroids
             p.AddAmmoType(BulletFactory);
             p.AddAmmoType(LaserAmmoFactory);
             p.Force = 10;
+
+            a.Commands = new List<Command>()
+            {
+                new Command(() => Input.GetKey(KeyCode.UpArrow), () => a.GetComponent<Thruster>().AddForce(a.Transform.Direction.normalized * a.Speed)),
+                new Command(() => Input.GetKey(KeyCode.RightArrow), () => a.Parent.Rotate(-a.RotationSpeed)),
+                new Command(() => Input.GetKey(KeyCode.LeftArrow), () => a.Parent.Rotate(a.RotationSpeed)),
+                new Command(() => Input.GetKeyDown(KeyCode.LeftAlt), () => a.GetComponent<Gun>().Shoot()),
+                new Command(() => Input.GetKeyDown(KeyCode.Space), () => a.GetComponent<Gun>().NextAmmo()),
+            };
 
             return a;
         }

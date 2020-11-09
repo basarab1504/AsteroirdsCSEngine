@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -29,6 +31,27 @@ namespace Asteroids
             p.BulletCount = 1;
             p.AddAmmoType(BulletFactory);
             p.Force = 6;
+
+            a.Commands = new List<Command>()
+            {
+                new Command(() => Asteroids.Physics.AnyOverlaps(a.Transform.Position, a.VisibilityRadius, Layer.Player, out Vector2 hit), () =>
+                {
+                    Asteroids.Physics.AnyOverlaps(a.Transform.Position, a.VisibilityRadius, Layer.Player, out Vector2 hit);
+                    float signedAngle = Vector2.SignedAngle(a.Transform.Direction, hit - a.Transform.Position);
+
+                    if (Math.Abs(signedAngle) >= a.VisibilityAngle)
+                        a.Parent.Rotate(a.RotationSpeed * Mathf.Sign(signedAngle));
+                    else
+                        a.GetComponent<Gun>().Shoot();
+
+                    var dir = hit - a.Transform.Position;
+                    if (dir.magnitude > a.DistanceToKeep)
+                    {
+                        var dirNorm = dir.normalized * a.Speed;
+                        a.Parent.Move(dirNorm * a.Speed * Asteroids.Time.DeltaTime);
+                    }
+                }),
+            };
 
             return a;
         }
