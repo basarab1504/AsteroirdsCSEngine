@@ -4,13 +4,13 @@ namespace Asteroids
 {
     public class Collider : Component
     {
-        public event Action OnCollision;
+        public event Action Collision;
         public Layer CollisionLayer { get; set; }
 
         public void Process(Collider other)
         {
-            if (OnCollision != null)
-                OnCollision();
+            if (Collision != null)
+                Collision();
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Asteroids
                 new Command(() => Input.GetKey(KeyCode.RightArrow), () => Parent.Rotate(-RotationSpeed)),
                 new Command(() => Input.GetKey(KeyCode.LeftArrow), () => Parent.Rotate(RotationSpeed)),
                 new Command(() => Input.GetKeyDown(KeyCode.LeftAlt), () => GetComponent<Gun>().Shoot()),
+                new Command(() => Input.GetKeyDown(KeyCode.Space), () => GetComponent<Gun>().NextAmmo()),
             };
         }
 

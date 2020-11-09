@@ -19,7 +19,7 @@ namespace Asteroids
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(1, 1);
             c.CollisionLayer = Layer.EnemyShip;
-            c.OnCollision += g.DestroyObject;
+            c.Collision += g.DestroyObject;
 
             a.Transform.Scale = new Vector2(0.5f, 1);
             a.Speed = 1f;
@@ -27,8 +27,7 @@ namespace Asteroids
             var p = g.AddComponent<Gun>();
             var am = p.AddComponent<Pool<Ammo>>();
             p.BulletCount = 1;
-            p.AmmoBox = am;
-            p.SetAmmo(BulletFactory);
+            p.AddAmmoType(BulletFactory);
             p.Force = 6;
 
             return a;

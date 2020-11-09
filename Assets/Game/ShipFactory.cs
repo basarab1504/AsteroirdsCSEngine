@@ -5,6 +5,7 @@ namespace Asteroids
     public class PlayerShipFactory : Factory<Ship>
     {
         public Factory<Ammo> BulletFactory { get; set; }
+        public Factory<Ammo> LaserAmmoFactory { get; set; }
 
         public override Ship CreateFrom(GameObject g)
         {
@@ -19,7 +20,7 @@ namespace Asteroids
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(1, 1);
             c.CollisionLayer = Layer.Player;
-            c.OnCollision += g.DestroyObject;
+            c.Collision += g.DestroyObject;
 
             a.Transform.Scale = new Vector2(0.5f, 1);
             a.Speed = 0.02f;
@@ -27,8 +28,8 @@ namespace Asteroids
             var p = g.AddComponent<Gun>();
             var am = g.AddComponent<Pool<Ammo>>();
             p.BulletCount = 6;
-            p.AmmoBox = am;
-            p.SetAmmo(BulletFactory);
+            p.AddAmmoType(BulletFactory);
+            p.AddAmmoType(LaserAmmoFactory);
             p.Force = 10;
 
             return a;

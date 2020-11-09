@@ -25,6 +25,8 @@ public class UnityProxy : MonoBehaviour
     [SerializeField]
     UnityFactory unityPlayerBulletsFactory;
     [SerializeField]
+    UnityFactory unityPlayerLaserAmmoFactory;
+    [SerializeField]
     Text scoreText;
     [SerializeField]
     Button restart;
@@ -64,39 +66,39 @@ public class UnityProxy : MonoBehaviour
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        var asteroidSpawnerGameObject = Game.Create<GameObject>();
+        // var asteroidSpawnerGameObject = Game.Create<GameObject>();
 
-        var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
-        asteroidSpawnerTransform.Position = new Vector2(0, 0);
-        asteroidSpawnerTransform.Scale = new Vector2(10, 10);
-        asteroidSpawnerTransform.Direction = new Vector2(0, 1);
+        // var asteroidSpawnerTransform = asteroidSpawnerGameObject.AddComponent<Transform>();
+        // asteroidSpawnerTransform.Position = new Vector2(0, 0);
+        // asteroidSpawnerTransform.Scale = new Vector2(10, 10);
+        // asteroidSpawnerTransform.Direction = new Vector2(0, 1);
 
-        var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
-        asteroidSpawner.Cooldown = 150;
+        // var asteroidSpawner = asteroidSpawnerGameObject.AddComponent<CooldownSpawner<Asteroid>>();
+        // asteroidSpawner.Cooldown = 150;
 
-        var asteroidFactory = new AsteroidFactory();
-        asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
-        asteroidSpawner.Factory = asteroidFactory;
+        // var asteroidFactory = new AsteroidFactory();
+        // asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
+        // asteroidSpawner.Factory = asteroidFactory;
 
 
-        var enemyShipSpawnerGameObject = Game.Create<GameObject>();
+        // var enemyShipSpawnerGameObject = Game.Create<GameObject>();
 
-        var enemyShipSpawnerTransform = enemyShipSpawnerGameObject.AddComponent<Transform>();
-        enemyShipSpawnerTransform.Position = new Vector2(0, 0);
-        enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
-        enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
+        // var enemyShipSpawnerTransform = enemyShipSpawnerGameObject.AddComponent<Transform>();
+        // enemyShipSpawnerTransform.Position = new Vector2(0, 0);
+        // enemyShipSpawnerTransform.Scale = new Vector2(10, 10);
+        // enemyShipSpawnerTransform.Direction = new Vector2(0, 1);
 
-        var enemyShipSpawnerComponent = enemyShipSpawnerGameObject.AddComponent<CooldownSpawner<EnemyShip>>();
-        enemyShipSpawnerComponent.Cooldown = 200;
+        // var enemyShipSpawnerComponent = enemyShipSpawnerGameObject.AddComponent<CooldownSpawner<EnemyShip>>();
+        // enemyShipSpawnerComponent.Cooldown = 200;
 
-        var enemyShipFactory = new EnemyShipFactory();
-        var enemyPlayerBulletFactory = new EnemyBulletFactory();
+        // var enemyShipFactory = new EnemyShipFactory();
+        // var enemyPlayerBulletFactory = new EnemyBulletFactory();
 
-        enemyPlayerBulletFactory.Spawned += unityEnemyBulletFactory.OnSpawn;
-        enemyShipFactory.BulletFactory = enemyPlayerBulletFactory;
-        enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
+        // enemyPlayerBulletFactory.Spawned += unityEnemyBulletFactory.OnSpawn;
+        // enemyShipFactory.BulletFactory = enemyPlayerBulletFactory;
+        // enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
 
-        enemyShipSpawnerComponent.Factory = enemyShipFactory;
+        // enemyShipSpawnerComponent.Factory = enemyShipFactory;
 
 
         var shipSpawnerGameObject = Game.Create<GameObject>();
@@ -110,9 +112,14 @@ public class UnityProxy : MonoBehaviour
 
         var shipFactory = new PlayerShipFactory();
         var playerBulletFactory = new PlayerBulletFactory();
+        var playerLaserAmmoFactory = new PlayerLaserAmmoFactory();
 
         playerBulletFactory.Spawned += unityPlayerBulletsFactory.OnSpawn;
         shipFactory.BulletFactory = playerBulletFactory;
+
+        playerLaserAmmoFactory.Spawned += unityPlayerLaserAmmoFactory.OnSpawn;
+        shipFactory.LaserAmmoFactory = playerLaserAmmoFactory;
+
         shipFactory.Spawned += unityPlayerShipFactory.OnSpawn;
 
         shipSpawnerComponent.Factory = shipFactory;

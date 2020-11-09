@@ -12,7 +12,11 @@ namespace Asteroids
 
         public void RebuildPool(int size)
         {
+            foreach(var p in poolables)
+                p.DestroyObject();
+
             poolables = new List<T>(size);
+            
             for (; size > 0; size--)
             {
                 var created = Factory.Create(Transform.Position);
