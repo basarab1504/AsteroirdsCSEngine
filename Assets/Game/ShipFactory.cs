@@ -35,11 +35,11 @@ namespace Asteroids
 
             a.Commands = new List<Command>()
             {
-                new Command(() => Input.GetKey(KeyCode.UpArrow), () => a.GetComponent<Thruster>().AddForce(a.Transform.Direction.normalized * a.Speed)),
-                new Command(() => Input.GetKey(KeyCode.RightArrow), () => a.Parent.Rotate(-a.RotationSpeed)),
-                new Command(() => Input.GetKey(KeyCode.LeftArrow), () => a.Parent.Rotate(a.RotationSpeed)),
-                new Command(() => Input.GetKeyDown(KeyCode.LeftAlt), () => a.GetComponent<Gun>().Shoot()),
-                new Command(() => Input.GetKeyDown(KeyCode.Space), () => a.GetComponent<Gun>().NextAmmo()),
+                new Command(() => Input.GetAxisRaw("Vertical") > 0, () => a.GetComponent<Thruster>().AddForce(a.Transform.Direction.normalized * a.Speed)),
+                new Command(() => Input.GetAxisRaw("Horizontal") > 0, () => a.Parent.Rotate(-a.RotationSpeed)),
+                new Command(() => Input.GetAxisRaw("Horizontal") < 0, () => a.Parent.Rotate(a.RotationSpeed)),
+                new Command(() => Input.GetMouseButtonDown(0), () => a.GetComponent<Gun>().Shoot()),
+                new Command(() => Input.GetMouseButtonDown(1), () => a.GetComponent<Gun>().NextAmmo()),
             };
 
             return a;

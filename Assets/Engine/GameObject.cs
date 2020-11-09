@@ -55,16 +55,20 @@ namespace Asteroids
         {
             var created = Game.Create<T>();
             components.Add(typeof(T), created);
+            // created.Destroy += RemoveComponent<T>;
             created.Parent = this;
             return created;
         }
 
         public void RemoveComponent<T>() where T : Component
         {
-            var component = components[typeof(T)];
-            component.Parent = null;
-            components.Remove(typeof(T));
-            component.DestroyObject();
+            if (components.ContainsKey(typeof(T)))
+            {
+                var component = components[typeof(T)];
+                component.Parent = null;
+                components.Remove(typeof(T));
+                component.DestroyObject();
+            }
         }
     }
 }

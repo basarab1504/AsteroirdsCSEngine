@@ -13,7 +13,7 @@ namespace Asteroids
         public void RebuildPool(int size)
         {
             foreach(var p in poolables)
-                p.DestroyObject();
+                p.Parent.DestroyObject();
 
             poolables = new List<T>(size);
             

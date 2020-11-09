@@ -25,7 +25,6 @@ namespace Asteroids
         private List<EngineObject> objects = new List<EngineObject>();
         private static List<EngineObject> toAdd = new List<EngineObject>();
         private List<EngineObject> toStart = new List<EngineObject>();
-        private List<EngineObject> ActiveObjects => objects.FindAll(x => x.Active && !x.Destroyed);
 
         public static T Create<T>() where T : EngineObject
         {
@@ -50,7 +49,9 @@ namespace Asteroids
                 mode = Graphics.ThreeDimension;
             else
                 mode = Graphics.TwoDimension;
-            GraphicsChanged();
+
+            if (GraphicsChanged != null)
+                GraphicsChanged();
         }
 
         public void Update()
@@ -72,11 +73,13 @@ namespace Asteroids
             }
             toStart.Clear();
 
-            foreach (GameObject go in ActiveObjects.OfType<GameObject>())
-                clamper.Clamp(go);
+            foreach (GameObject go in objects.OfType<GameObject>())
+                if (IsActive(go))
+                    clamper.Clamp(go);
 
-            foreach (var u in ActiveObjects)
-                u.Update();
+            foreach (var u in objects)
+                if (IsActive(u))
+                    u.Update();
 
             physics.CheckCollisions();
 
@@ -86,6 +89,11 @@ namespace Asteroids
             objects.RemoveAll(x => x.Destroyed);
 
             time.Update();
+        }
+
+        private bool IsActive(EngineObject obj)
+        {
+            return obj.Active && !obj.Destroyed;
         }
 
         private void OnScoreChanged(int toAdd)
