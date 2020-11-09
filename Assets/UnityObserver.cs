@@ -24,7 +24,7 @@ public class UnityObserver : MonoBehaviour
         asteroidsObject.Destroy += () => Game.GraphicsChanged -= CheckGraphics;
         Game.GraphicsChanged += CheckGraphics;
         transform.position = asteroidsObject.Transform.Position;
-        transform.localScale = asteroidsObject.Transform.Scale;
+        transform.localScale = new Vector3(asteroidsObject.Transform.Scale.x, asteroidsObject.Transform.Scale.y, 1);
     }
 
     // Update is called once per frame
@@ -54,6 +54,7 @@ public class UnityObserver : MonoBehaviour
             DestroyImmediate(GetComponent<SpriteRenderer>());
             gameObject.AddComponent<MeshFilter>().mesh = mesh;
             gameObject.AddComponent<MeshRenderer>().material = material;
+            gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", color);
         }
     }
 }

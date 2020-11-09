@@ -19,9 +19,9 @@ namespace Asteroids
         public void CheckCollisions()
         {
             //лучше for
-            foreach (var a in ActiveColliders)
+            foreach (var a in objects.OfType<Collider>().Where(x => x.Active && !x.Destroyed))
             {
-                foreach (var b in ActiveColliders.Where(x => x != a))
+                foreach (var b in objects.OfType<Collider>().Where(x => x.Active && !x.Destroyed).Where(x => x != a))
                 {
                     if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer) && Physics.ShouldCollide(a.Transform, b.Transform))
                     {
