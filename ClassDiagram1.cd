@@ -1,2 +1,234 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Asteroids.Ammo">
+    <Position X="5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAJAAAAAABAAAAAAAAAAAAAEAAACAAAAA=</HashCode>
+      <FileName>Assets\Engine\Ammo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Asteroids.Asteroid">
+    <Position X="9.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAQAAAAACAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Asteroids.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Clamper">
+    <Position X="23.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Clamper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Collider">
+    <Position X="20.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIgAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Collider.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CollisionLayer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Asteroids.Command">
+    <Position X="26" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABIAAAAAAAAQAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Command.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Component">
+    <Position X="16.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAIAAAAAARAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Component.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Parent" />
+      <Property Name="Transform" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Components" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Asteroids.EngineObject">
+    <Position X="17.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAGAABAAAAAAAAAAAACBAAAAgAAAAoIAAAIA=</HashCode>
+      <FileName>Assets\Engine\EngineObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Factory&lt;T&gt;">
+    <Position X="17.75" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAgAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Factory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Game">
+    <Position X="20.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQBgAAAEIBAAgiAEAAIAQBAQQAAAEAEAAACAgAAAAE=</HashCode>
+      <FileName>Assets\Engine\Game.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="physics" />
+      <Field Name="mode" />
+      <Field Name="clamper" />
+      <Field Name="time" />
+      <Property Name="Mode" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="objects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Asteroids.GameObject">
+    <Position X="30.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAIBIAAAACABAQAECAAAAAEAAAAAIAAAAA=</HashCode>
+      <FileName>Assets\Engine\GameObject.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="components" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Asteroids.Gun">
+    <Position X="11.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAABQAAAAAACAQAAAAAGAABAAAAAAAIAAI=</HashCode>
+      <FileName>Assets\Engine\Gun.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AmmoBox" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="ammoTypes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Asteroids.Physics">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAACAAAAAAAAAAAAAASAAAAAQAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Physics.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="objects" />
+      <Property Name="LayerSettings" />
+      <Property Name="ActiveColliders" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Asteroids.Player">
+    <Position X="7.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Pool&lt;T&gt;">
+    <Position X="14" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAIAAAAAg=</HashCode>
+      <FileName>Assets\Engine\Pool.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Asteroids.Scorable">
+    <Position X="18.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Scorable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Ship">
+    <Position X="23" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgAAACAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Assets\Engine\Ship.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Commands" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Asteroids.Spawner&lt;T&gt;">
+    <Position X="27.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAIAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Spawner.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Asteroids.CooldownSpawner&lt;T&gt;">
+    <Position X="27.5" Y="14" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAABAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Spawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Thruster">
+    <Position X="16.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAEAAE=</HashCode>
+      <FileName>Assets\Engine\Thruster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Time">
+    <Position X="23.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAAAAAABAAAAAAAAAAAAIAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Time.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids.Transform">
+    <Position X="25.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgACIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\Transform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyShip">
+    <Position X="23" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACgAAAAEEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Engine\EnemyShip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;" Collapsed="true">
+    <Position X="17.5" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="System.Collections.Generic.List&lt;T&gt;.Enumerator" Collapsed="true">
+        <TypeIdentifier />
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Asteroids.IPoolable">
+    <Position X="25.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Assets\Engine\IPoolable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Asteroids.Graphics">
+    <Position X="23.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\Engine\GraphicsMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Asteroids.Layer">
+    <Position X="20.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAEAIAAAAAAAAAAABAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Engine\Layer.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
