@@ -62,8 +62,8 @@ public class UnityProxy : MonoBehaviour
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        CreateEnemyShipSpawner();
-        CreateAsteroidSpawner();
+        // CreateEnemyShipSpawner();
+        // CreateAsteroidSpawner();
 
         var shipSpawner = CreatePlayerShipSpawner();
         shipSpawner.Spawn();

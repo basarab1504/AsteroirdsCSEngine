@@ -4,23 +4,27 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    public class Pool<T> : Component where T : Component, IPoolable
+    public class Pool<T> : Component where T : Component, IPoolable<T>
     {
-        private List<T> poolables = new List<T>();
-
+        private T[] pols;
+        private LinkedList<T> poolables;
         public Factory<T> Factory { get; set; }
 
         public void RebuildPool(int size)
         {
-            foreach(var p in poolables)
-                p.Parent.DestroyObject();
+            if (pols != null)
+                foreach (var p in pols)
+                    p.Parent.DestroyObject();
 
-            poolables = new List<T>(size);
-            
-            for (; size > 0; size--)
+            pols = new T[size];
+            poolables = new LinkedList<T>();
+
+            for (int i = 0; i < size; i++)
             {
                 var created = Factory.Create(Transform.Position);
-                poolables.Add(created);
+                created.BecameUnusable += x => poolables.AddLast(x);
+                pols[i] = created;
+                poolables.AddLast(created);
             }
         }
 
@@ -28,26 +32,26 @@ namespace Asteroids
         {
             poolable = default(T);
 
-            foreach (var p in poolables)
-                if (!p.InUse())
-                {
-                    p.Transform.Position = Transform.Position;
-                    p.Reset();
-                    poolable = p;
-                    return true;
-                }
+            if (poolables.Count == 0)
+                return false;
 
-            return false;
+            poolable = poolables.First.Value;
+
+            poolable.Transform.Position = Transform.Position;
+            poolable.Reset();
+            poolable.SetActive(true);
+            poolables.RemoveFirst();
+
+            return true;
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
 
-            foreach(var p in poolables)
-                p.Parent.DestroyObject();
-
-            poolables.Clear();
+            if (poolables.Count != 0)
+                foreach (var p in poolables)
+                    p.Parent.DestroyObject();
         }
     }
 }
