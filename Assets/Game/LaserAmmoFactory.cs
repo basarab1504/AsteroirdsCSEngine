@@ -4,7 +4,7 @@ namespace Asteroids
 {
     public class PlayerLaserAmmoFactory : Factory<Ammo>
     {
-        public override Ammo CreateFrom(GameObject g)
+        protected override Ammo CreateFrom(GameObject g)
         {
             var a = g.AddComponent<Ammo>();
             var c = g.AddComponent<Collider>();

@@ -8,7 +8,7 @@ namespace Asteroids
         public Factory<Ammo> BulletFactory { get; set; }
         public Factory<Ammo> LaserAmmoFactory { get; set; }
 
-        public override Ship CreateFrom(GameObject g)
+        protected override Ship CreateFrom(GameObject g)
         {
             var a = g.AddComponent<Ship>();
             a.RotationSpeed = 5;

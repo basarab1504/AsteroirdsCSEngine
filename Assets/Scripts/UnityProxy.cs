@@ -104,6 +104,8 @@ public class UnityProxy : MonoBehaviour
         asteroidSpawner.Cooldown = 150;
 
         var asteroidFactory = new AsteroidFactory();
+        asteroidFactory.Duplicator = new ChildAsteroidFactory();
+        asteroidFactory.Duplicator.Spawned += unityAsteroidFactory.OnSpawn;
         asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
         asteroidSpawner.Factory = asteroidFactory;
     }

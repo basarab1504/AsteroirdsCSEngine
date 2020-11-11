@@ -29,6 +29,6 @@ namespace Asteroids
             return created;
         }
 
-        public abstract T CreateFrom(GameObject gameObject);
+        protected abstract T CreateFrom(GameObject gameObject);
     }
 }

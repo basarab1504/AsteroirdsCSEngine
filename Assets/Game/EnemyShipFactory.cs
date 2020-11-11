@@ -8,7 +8,7 @@ namespace Asteroids
     {
         public Factory<Ammo> BulletFactory { get; set; }
 
-        public override EnemyShip CreateFrom(GameObject g)
+        protected override EnemyShip CreateFrom(GameObject g)
         {
             var a = g.AddComponent<EnemyShip>();
             a.VisibilityRadius = 100;

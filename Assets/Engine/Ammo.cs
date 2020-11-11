@@ -24,8 +24,10 @@ namespace Asteroids
         public override void Update()
         {
             actualLifetime--;
+
             if (actualLifetime <= 0)
                 SetActive(false);
+                
             Transform.Position += direction * Time.DeltaTime;
         }
 
