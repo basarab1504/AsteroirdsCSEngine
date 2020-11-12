@@ -13,8 +13,8 @@ public class UnityFactory : MonoBehaviour
     public void OnSpawn(Component spawned)
     {
         var instantiated = Instantiate(observer, spawned.Transform.Position, Quaternion.identity);
-        spawned.ActiveStateChange += x => instantiated.gameObject.SetActive(x);
-        spawned.Destroy += () => Destroy(instantiated.gameObject);
+        spawned.ActiveStateChange.AddListener(x => instantiated.gameObject.SetActive(x));
+        spawned.Destroy.AddListener(() => Destroy(instantiated.gameObject));
         instantiated.asteroidsObject = spawned.Parent;
     }
 }

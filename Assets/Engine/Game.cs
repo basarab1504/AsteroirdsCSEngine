@@ -10,10 +10,10 @@ namespace Asteroids
         private static Graphics mode = Graphics.TwoDimension;
         public static Graphics Mode => mode;
 
-        public static event Action GraphicsChanged;
-        public event Action GameOver;
-        public event Action GameStarted;
-        public event Action ScoreChanged;
+        public GameEvent GraphicsChanged { get; } = new GameEvent();
+        public GameEvent GameOver { get; } = new GameEvent();
+        public GameEvent GameStarted { get; } = new GameEvent();
+        public GameEvent ScoreChanged { get; } = new GameEvent();
 
         private Clamper clamper;
         private Time time;
@@ -22,8 +22,9 @@ namespace Asteroids
 
         public float Score => score;
 
-        private HashSet<EngineObject> objects = new HashSet<EngineObject>();
+        private static HashSet<BaseGameEvent> events = new HashSet<BaseGameEvent>();
         private static HashSet<EngineObject> toAdd = new HashSet<EngineObject>();
+        private HashSet<EngineObject> objects = new HashSet<EngineObject>();
         private HashSet<EngineObject> toStart = new HashSet<EngineObject>();
 
         public static T Create<T>() where T : EngineObject
@@ -36,12 +37,18 @@ namespace Asteroids
 
         public void Init(Vector2 size, int framerate)
         {
+            events.Clear();
             toAdd.Clear();
             clamper = new Clamper();
             clamper.AreaSize = size;
             time = new Time(framerate);
             physics = new Physics(objects);
             OnGameStarted();
+        }
+
+        public static void RegisterEvent(BaseGameEvent gameEvent)
+        {
+            events.Add(gameEvent);
         }
 
         public void ChangeMode()
@@ -52,7 +59,7 @@ namespace Asteroids
                 mode = Graphics.TwoDimension;
 
             if (GraphicsChanged != null)
-                GraphicsChanged();
+                GraphicsChanged.Raise();
         }
 
         public void Update()
@@ -100,22 +107,30 @@ namespace Asteroids
         private void OnScoreChanged(int toAdd)
         {
             score += toAdd;
-            ScoreChanged();
+            ScoreChanged.Raise();
         }
 
         private void OnGameStarted()
         {
             if (GameStarted != null)
-                GameStarted();
+                GameStarted.Raise();
         }
 
         private void OnGameOver()
         {
             if (GameOver != null)
-                GameOver();
+                GameOver.Raise();
 
             foreach (var o in objects)
                 o.DestroyObject();
+
+            foreach (var e in events)
+                e.RemoveAllListeners();
+
+            toAdd.Clear();
+            objects.Clear();
+            events.Clear();
+            toStart.Clear();
         }
     }
 }

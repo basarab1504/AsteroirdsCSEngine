@@ -13,6 +13,8 @@ namespace Asteroids
         {
             base.Start();
             PushRandom();
+            GetComponent<Collider>().Collision.AddListener(Duplicate);
+            GetComponent<Collider>().Collision.AddListener(Parent.DestroyObject);
         }
 
         public override void Update()
@@ -20,9 +22,8 @@ namespace Asteroids
             Parent.Move(Direction * Speed * Time.DeltaTime);
         }
 
-        public override void OnDestroy()
+        private void Duplicate()
         {
-            base.OnDestroy();
             for (int i = 0; i < SpawnOnDestoy; i++)
                 Duplicator.Create(Transform.Position);
         }

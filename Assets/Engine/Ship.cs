@@ -14,6 +14,7 @@ namespace Asteroids
         public override void Start()
         {
             base.Start();
+            GetComponent<Collider>().Collision.AddListener(Parent.DestroyObject);
         }
 
         public override void Update()

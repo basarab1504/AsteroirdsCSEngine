@@ -11,7 +11,7 @@ namespace Asteroids
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(0.5f, 0.5f);
             c.CollisionLayer = Layer.Asteroid;
-            c.Collision += g.DestroyObject;
+            c.Collision.AddListener(g.DestroyObject);
 
             g.AddComponent<Scorable>().Score = 2;
 

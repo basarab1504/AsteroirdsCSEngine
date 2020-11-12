@@ -10,7 +10,7 @@ namespace Asteroids
 
     public abstract class Factory<T> where T : Component
     {
-        public event Action<T> Spawned;
+        public GameEvent<T> Spawned { get; } = new GameEvent<T>();
 
         public T Create(Vector2 pos)
         {
@@ -24,8 +24,8 @@ namespace Asteroids
             var created = CreateFrom(go);
 
             if (Spawned != null)
-                Spawned(created);
-                
+                Spawned.Raise(created);
+
             return created;
         }
 

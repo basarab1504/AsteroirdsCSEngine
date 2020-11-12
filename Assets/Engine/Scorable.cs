@@ -11,7 +11,7 @@ namespace Asteroids
         public override void Start()
         {
             base.Start();
-            GetComponent<Collider>().Collision += OnScored;
+            GetComponent<Collider>().Collision.AddListener(OnScored);
         }
 
         private void OnScored()

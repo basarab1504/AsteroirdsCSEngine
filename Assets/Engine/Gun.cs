@@ -5,51 +5,27 @@ namespace Asteroids
 {
     public class Gun : Component
     {
-        private List<Factory<Ammo>> ammoTypes = new List<Factory<Ammo>>();
-        private int ammoTypeIndex;
-        private Pool<Ammo> AmmoBox { get; set; }
+        private List<Pool<Ammo>> ammoBoxes = new List<Pool<Ammo>>();
         public float Force { get; set; }
 
-        public override void Start()
+        public void AddAmmoBox(Pool<Ammo> ammoBox)
         {
-            base.Start();
-            AmmoBox = GetComponent<Pool<Ammo>>();
+            if (!ammoBoxes.Contains(ammoBox))
+                ammoBoxes.Add(ammoBox);
         }
 
-        // public void AddAmmoType(Factory<Ammo> ammoType)
-        // {
-        //     if (!ammoTypes.Contains(ammoType))
-        //     {
-        //         ammoTypes.Add(ammoType);
-
-        //         if (ammoTypes.Count == 1)
-        //             SetAmmo(ammoType);
-        //     }
-        // }
-
-        private void SetAmmo(Factory<Ammo> ammoType)
+        public bool TryShootWithType(int indexOfAmmo)
         {
-            GetComponent<Pool<Ammo>>().Factory = ammoType;
-            // GetComponent<Pool<Ammo>>().RebuildPool(BulletCount);
-        }
-
-        public void NextAmmo()
-        {
-            // ammoTypeIndex++;
-
-            // if (ammoTypeIndex >= ammoTypes.Count)
-            //     ammoTypeIndex = 0;
-
-            // SetAmmo(ammoTypes[ammoTypeIndex]);
-        }
-
-        public void Shoot()
-        {
-            Ammo ammo;
-            if (AmmoBox.TryGetPoolable(out ammo))
+            if (indexOfAmmo < ammoBoxes.Count)
             {
-                ammo.Shoot(Transform.Direction.normalized * Force);
+                Ammo ammo;
+                if (ammoBoxes[indexOfAmmo].TryGetPoolable(out ammo))
+                {
+                    ammo.Shoot(Transform.Direction.normalized * Force);
+                    return true;
+                }
             }
+            return false;
         }
     }
 }

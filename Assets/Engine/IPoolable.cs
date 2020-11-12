@@ -4,7 +4,7 @@ namespace Asteroids
 {
     public interface IPoolable<T>
     {
-        event Action<T> BecameUnusable; 
+        GameEvent<T> BecameUnusable { get; }
         bool InUse();
         void Reset();
     }

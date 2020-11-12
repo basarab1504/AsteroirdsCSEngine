@@ -12,7 +12,7 @@ namespace Asteroids
 
             c.Transform.Scale = new Vector2(0.4f, 0.4f);
             c.CollisionLayer = Layer.BulletEnemy;
-            c.Collision += () => g.SetActive(false);
+            c.Collision.AddListener(() => g.SetActive(false));
 
             a.Transform.Scale = new Vector2(0.4f, 0.4f);
             a.Lifetime = 50;

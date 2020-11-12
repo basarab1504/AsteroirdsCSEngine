@@ -50,10 +50,10 @@ public class UnityProxy : MonoBehaviour
         scoreText.text = "0";
 
         game = new Game();
-        
-        game.ScoreChanged += () => scoreText.text = game.Score.ToString();
-        game.GameStarted += () => restart.gameObject.SetActive(false);
-        game.GameOver += () => restart.gameObject.SetActive(true);
+
+        game.ScoreChanged.AddListener(() => scoreText.text = game.Score.ToString());
+        game.GameStarted.AddListener(() => restart.gameObject.SetActive(false));
+        game.GameOver.AddListener(() => restart.gameObject.SetActive(true));
 
         game.Init(new Vector2(10, 10), targetFramerate);
 
@@ -62,8 +62,8 @@ public class UnityProxy : MonoBehaviour
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
 
-        // CreateEnemyShipSpawner();
-        // CreateAsteroidSpawner();
+        CreateEnemyShipSpawner();
+        CreateAsteroidSpawner();
 
         var shipSpawner = CreatePlayerShipSpawner();
         shipSpawner.Spawn();
@@ -84,9 +84,9 @@ public class UnityProxy : MonoBehaviour
         var enemyShipFactory = new EnemyShipFactory();
         var enemyPlayerBulletFactory = new EnemyBulletFactory();
 
-        enemyPlayerBulletFactory.Spawned += unityEnemyBulletFactory.OnSpawn;
+        enemyPlayerBulletFactory.Spawned.AddListener(unityEnemyBulletFactory.OnSpawn);
         enemyShipFactory.BulletFactory = enemyPlayerBulletFactory;
-        enemyShipFactory.Spawned += unityEnemyShipFactory.OnSpawn;
+        enemyShipFactory.Spawned.AddListener(unityEnemyShipFactory.OnSpawn);
 
         enemyShipSpawnerComponent.Factory = enemyShipFactory;
     }
@@ -105,8 +105,8 @@ public class UnityProxy : MonoBehaviour
 
         var asteroidFactory = new AsteroidFactory();
         asteroidFactory.Duplicator = new ChildAsteroidFactory();
-        asteroidFactory.Duplicator.Spawned += unityAsteroidFactory.OnSpawn;
-        asteroidFactory.Spawned += unityAsteroidFactory.OnSpawn;
+        asteroidFactory.Duplicator.Spawned.AddListener(unityAsteroidFactory.OnSpawn);
+        asteroidFactory.Spawned.AddListener(unityAsteroidFactory.OnSpawn);
         asteroidSpawner.Factory = asteroidFactory;
     }
 
@@ -125,13 +125,13 @@ public class UnityProxy : MonoBehaviour
         var playerBulletFactory = new PlayerBulletFactory();
         var playerLaserAmmoFactory = new PlayerLaserAmmoFactory();
 
-        playerBulletFactory.Spawned += unityPlayerBulletsFactory.OnSpawn;
+        playerBulletFactory.Spawned.AddListener(unityPlayerBulletsFactory.OnSpawn);
         shipFactory.BulletFactory = playerBulletFactory;
 
-        playerLaserAmmoFactory.Spawned += unityPlayerLaserAmmoFactory.OnSpawn;
+        playerLaserAmmoFactory.Spawned.AddListener(unityPlayerLaserAmmoFactory.OnSpawn);
         shipFactory.LaserAmmoFactory = playerLaserAmmoFactory;
 
-        shipFactory.Spawned += unityPlayerShipFactory.OnSpawn;
+        shipFactory.Spawned.AddListener(unityPlayerShipFactory.OnSpawn);
 
         shipSpawnerComponent.Factory = shipFactory;
 

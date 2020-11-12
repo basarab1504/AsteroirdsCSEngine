@@ -21,17 +21,21 @@ namespace Asteroids
             var c = g.AddComponent<Collider>();
             c.Transform.Scale = new Vector2(1, 1);
             c.CollisionLayer = Layer.EnemyShip;
-            c.Collision += g.DestroyObject;
+            // c.Collision += g.DestroyObject;
 
             a.Transform.Scale = new Vector2(0.5f, 1);
             a.Speed = 1f;
 
             var p = g.AddComponent<Gun>();
-            var am = p.AddComponent<Pool<Ammo>>();
+            p.Force = 6;
+
+            var am = Game.Create<Pool<Ammo>>();
+            am.Parent = g;
             am.Factory = BulletFactory;
             am.BaseSize = 1;
-            // p.AddAmmoType(BulletFactory);
-            p.Force = 6;
+            am.FixedSize = true;
+
+            p.AddAmmoBox(am);
 
             a.Commands = new List<Command>()
             {
@@ -43,7 +47,7 @@ namespace Asteroids
                     if (Math.Abs(signedAngle) >= a.VisibilityAngle)
                         a.Parent.Rotate(a.RotationSpeed * Mathf.Sign(signedAngle));
                     else
-                        a.GetComponent<Gun>().Shoot();
+                        a.GetComponent<Gun>().TryShootWithType(0);
 
                     var dir = hit - a.Transform.Position;
                     if (dir.magnitude > a.DistanceToKeep)

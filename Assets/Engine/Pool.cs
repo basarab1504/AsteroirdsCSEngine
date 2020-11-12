@@ -10,6 +10,7 @@ namespace Asteroids
         private Queue<T> free;
         public Factory<T> Factory { get; set; }
         public int BaseSize { get; set; }
+        public bool FixedSize { get; set; }
 
         public override void Start()
         {
@@ -25,8 +26,13 @@ namespace Asteroids
         {
             poolable = default(T);
 
-            if (free.Count == 1)
-                CreatePoolable();
+            if (free.Count == 0)
+            {
+                if (FixedSize)
+                    return false;
+                else
+                    CreatePoolable();
+            }
 
             poolable = free.Dequeue();
 
@@ -37,15 +43,15 @@ namespace Asteroids
             return true;
         }
 
-        public override void OnDestroy()
+        private void OnPoolableBecameUnuable(T poolable)
         {
-            base.OnDestroy();
+            free.Enqueue(poolable);
         }
 
         private void CreatePoolable()
         {
             var created = Factory.Create(Transform.Position);
-            created.BecameUnusable += x => free.Enqueue(x);
+            created.BecameUnusable.AddListener(OnPoolableBecameUnuable);
             poolObjects.Add(created);
             free.Enqueue(created);
         }

@@ -5,18 +5,11 @@ namespace Asteroids
 {
     public class Ammo : Component, IPoolable<Ammo>
     {
-        public event Action<Ammo> BecameUnusable;
+        public GameEvent<Ammo> BecameUnusable { get; } = new GameEvent<Ammo>();
 
         private Vector2 direction;
         private float actualLifetime;
         public float Lifetime { get; set; }
-
-        public override void Start()
-        {
-            base.Start();
-            actualLifetime = Lifetime;
-            SetActive(false);
-        }
 
         public void Shoot(Vector2 force)
         {
@@ -32,7 +25,7 @@ namespace Asteroids
                 if (BecameUnusable != null)
                 {
                     SetActive(false);
-                    BecameUnusable(this);
+                    BecameUnusable.Raise(this);
                 }
             }
 
@@ -48,6 +41,12 @@ namespace Asteroids
         {
             actualLifetime = Lifetime;
             Parent.SetActive(true);
+        }
+
+        public override void OnDestroy()
+        {
+            BecameUnusable.RemoveAllListeners();
+            base.OnDestroy();
         }
     }
 }
