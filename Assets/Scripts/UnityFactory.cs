@@ -10,11 +10,12 @@ public class UnityFactory : MonoBehaviour
     [SerializeField]
     UnityObserver observer;
 
-    public void OnSpawn(Component spawned)
+    public void OnSpawn(Game game, Component spawned)
     {
         var instantiated = Instantiate(observer, spawned.Transform.Position, Quaternion.identity);
         spawned.ActiveStateChange.AddListener(x => instantiated.gameObject.SetActive(x));
         spawned.Destroy.AddListener(() => Destroy(instantiated.gameObject));
-        instantiated.asteroidsObject = spawned.Parent;
+        instantiated.AsteroidsObject = spawned.Parent;
+        instantiated.Game = game;
     }
 }

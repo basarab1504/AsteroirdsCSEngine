@@ -12,28 +12,29 @@ public class UnityObserver : MonoBehaviour
     private Material material;
     [SerializeField]
     private Color color;
-    public Asteroids.GameObject asteroidsObject;
+    public Game Game { get; set; }
+    public Asteroids.GameObject AsteroidsObject { get; set; }
 
     // Start is called before the first frame update
     private void Start()
     {
         CheckGraphics();
 
-        asteroidsObject.ActiveStateChange.AddListener(x => transform.position = asteroidsObject.Transform.Position);
-        asteroidsObject.ActiveStateChange.AddListener(x => gameObject.SetActive(x));
-        asteroidsObject.Destroy.AddListener(() => Destroy(gameObject));
-        // Game.GraphicsChanged.AddListener(CheckGraphics);
-        // asteroidsObject.Destroy.AddListener(() => Game.GraphicsChanged.RemoveListener(CheckGraphics));
-        
-        transform.position = asteroidsObject.Transform.Position;
-        transform.localScale = new Vector3(asteroidsObject.Transform.Scale.x, asteroidsObject.Transform.Scale.y, 1);
+        AsteroidsObject.ActiveStateChange.AddListener(x => transform.position = AsteroidsObject.Transform.Position);
+        AsteroidsObject.ActiveStateChange.AddListener(x => gameObject.SetActive(x));
+        AsteroidsObject.Destroy.AddListener(() => Destroy(gameObject));
+        Game.GraphicsChanged.AddListener(CheckGraphics);
+        AsteroidsObject.Destroy.AddListener(() => Game.GraphicsChanged.RemoveListener(CheckGraphics));
+
+        transform.position = AsteroidsObject.Transform.Position;
+        transform.localScale = new Vector3(AsteroidsObject.Transform.Scale.x, AsteroidsObject.Transform.Scale.y, 1);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        transform.position = asteroidsObject.Transform.Position;
-        transform.rotation = Quaternion.LookRotation(transform.forward, asteroidsObject.Transform.Direction.normalized);
+        transform.position = AsteroidsObject.Transform.Position;
+        transform.rotation = Quaternion.LookRotation(transform.forward, AsteroidsObject.Transform.Direction.normalized);
     }
 
     private void CheckGraphics()

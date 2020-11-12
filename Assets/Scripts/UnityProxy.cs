@@ -84,9 +84,9 @@ public class UnityProxy : MonoBehaviour
         var enemyShipFactory = new EnemyShipFactory();
         var enemyPlayerBulletFactory = new EnemyBulletFactory();
 
-        enemyPlayerBulletFactory.Spawned.AddListener(unityEnemyBulletFactory.OnSpawn);
+        enemyPlayerBulletFactory.Spawned.AddListener((x) => unityEnemyBulletFactory.OnSpawn(game, x));
         enemyShipFactory.BulletFactory = enemyPlayerBulletFactory;
-        enemyShipFactory.Spawned.AddListener(unityEnemyShipFactory.OnSpawn);
+        enemyShipFactory.Spawned.AddListener((x) => unityEnemyShipFactory.OnSpawn(game, x));
 
         enemyShipSpawnerComponent.Factory = enemyShipFactory;
     }
@@ -105,8 +105,8 @@ public class UnityProxy : MonoBehaviour
 
         var asteroidFactory = new AsteroidFactory();
         asteroidFactory.Duplicator = new ChildAsteroidFactory();
-        asteroidFactory.Duplicator.Spawned.AddListener(unityAsteroidFactory.OnSpawn);
-        asteroidFactory.Spawned.AddListener(unityAsteroidFactory.OnSpawn);
+        asteroidFactory.Duplicator.Spawned.AddListener((x) => unityAsteroidFactory.OnSpawn(game, x));
+        asteroidFactory.Spawned.AddListener((x) => unityAsteroidFactory.OnSpawn(game, x));
         asteroidSpawner.Factory = asteroidFactory;
     }
 
@@ -125,13 +125,13 @@ public class UnityProxy : MonoBehaviour
         var playerBulletFactory = new PlayerBulletFactory();
         var playerLaserAmmoFactory = new PlayerLaserAmmoFactory();
 
-        playerBulletFactory.Spawned.AddListener(unityPlayerBulletsFactory.OnSpawn);
+        playerBulletFactory.Spawned.AddListener((x) => unityPlayerBulletsFactory.OnSpawn(game, x));
         shipFactory.BulletFactory = playerBulletFactory;
 
-        playerLaserAmmoFactory.Spawned.AddListener(unityPlayerLaserAmmoFactory.OnSpawn);
+        playerLaserAmmoFactory.Spawned.AddListener((x) => unityPlayerLaserAmmoFactory.OnSpawn(game, x));
         shipFactory.LaserAmmoFactory = playerLaserAmmoFactory;
 
-        shipFactory.Spawned.AddListener(unityPlayerShipFactory.OnSpawn);
+        shipFactory.Spawned.AddListener((x) => unityPlayerShipFactory.OnSpawn(game, x));
 
         shipSpawnerComponent.Factory = shipFactory;
 

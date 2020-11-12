@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Asteroids
 {
-    class Game
+    public class Game
     {
         private static Graphics mode = Graphics.TwoDimension;
         public static Graphics Mode => mode;
