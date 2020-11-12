@@ -22,9 +22,9 @@ namespace Asteroids
 
         public float Score => score;
 
-        private List<EngineObject> objects = new List<EngineObject>();
-        private static List<EngineObject> toAdd = new List<EngineObject>();
-        private List<EngineObject> toStart = new List<EngineObject>();
+        private HashSet<EngineObject> objects = new HashSet<EngineObject>();
+        private static HashSet<EngineObject> toAdd = new HashSet<EngineObject>();
+        private HashSet<EngineObject> toStart = new HashSet<EngineObject>();
 
         public static T Create<T>() where T : EngineObject
         {
@@ -87,7 +87,7 @@ namespace Asteroids
             if (objects.OfType<Player>().Any(x => x.Destroyed))
                 OnGameOver();
 
-            objects.RemoveAll(x => x.Destroyed);
+            objects.RemoveWhere(x => x.Destroyed);
 
             time.Update();
         }

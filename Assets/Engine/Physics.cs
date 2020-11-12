@@ -7,10 +7,10 @@ namespace Asteroids
     class Physics
     {
         public static Dictionary<Layer, List<Layer>> LayerSettings { get; set; }
-        private static List<EngineObject> objects;
+        private static HashSet<EngineObject> objects;
         private static IEnumerable<Collider> ActiveColliders => objects.OfType<Collider>().Where(x => x.Active && !x.Destroyed);
 
-        public Physics(List<EngineObject> objects)
+        public Physics(HashSet<EngineObject> objects)
         {
             LayerSettings = new Dictionary<Layer, List<Layer>>();
             Physics.objects = objects;

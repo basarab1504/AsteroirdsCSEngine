@@ -6,41 +6,33 @@ namespace Asteroids
 {
     public class Pool<T> : Component where T : Component, IPoolable<T>
     {
-        private T[] poolables;
-        private LinkedList<T> free;
+        private List<T> poolObjects;
+        private Queue<T> free;
         public Factory<T> Factory { get; set; }
+        public int BaseSize { get; set; }
 
-        public void RebuildPool(int size)
+        public override void Start()
         {
-            if (poolables != null)
-                foreach (var p in poolables)
-                    p.Parent.DestroyObject();
+            base.Start();
+            poolObjects = new List<T>();
+            free = new Queue<T>();
 
-            poolables = new T[size];
-            free = new LinkedList<T>();
-
-            for (int i = 0; i < size; i++)
-            {
-                var created = Factory.Create(Transform.Position);
-                created.BecameUnusable += x => free.AddLast(x);
-                poolables[i] = created;
-                free.AddLast(created);
-            }
+            for (int i = 0; i < BaseSize; i++)
+                CreatePoolable();
         }
 
         public bool TryGetPoolable(out T poolable)
         {
             poolable = default(T);
 
-            if (free.Count == 0)
-                return false;
+            if (free.Count == 1)
+                CreatePoolable();
 
-            poolable = free.First.Value;
+            poolable = free.Dequeue();
 
             poolable.Transform.Position = Transform.Position;
             poolable.Reset();
             poolable.SetActive(true);
-            free.RemoveFirst();
 
             return true;
         }
@@ -48,10 +40,14 @@ namespace Asteroids
         public override void OnDestroy()
         {
             base.OnDestroy();
+        }
 
-            if (free.Count != 0)
-                foreach (var p in free)
-                    p.Parent.DestroyObject();
+        private void CreatePoolable()
+        {
+            var created = Factory.Create(Transform.Position);
+            created.BecameUnusable += x => free.Enqueue(x);
+            poolObjects.Add(created);
+            free.Enqueue(created);
         }
     }
 }

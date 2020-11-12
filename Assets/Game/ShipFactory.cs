@@ -28,9 +28,10 @@ namespace Asteroids
 
             var p = g.AddComponent<Gun>();
             var am = g.AddComponent<Pool<Ammo>>();
-            p.BulletCount = 6;
-            p.AddAmmoType(BulletFactory);
-            p.AddAmmoType(LaserAmmoFactory);
+            am.BaseSize = 4;
+            am.Factory = BulletFactory;
+            // p.AddAmmoType(BulletFactory);
+            // p.AddAmmoType(LaserAmmoFactory);
             p.Force = 10;
 
             a.Commands = new List<Command>()
