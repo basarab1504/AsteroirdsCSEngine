@@ -18,18 +18,39 @@ namespace Asteroids
 
         public void CheckCollisions()
         {
-            //лучше for
-            foreach (var a in objects.OfType<Collider>().Where(x => x.Active && !x.Destroyed))
+            List<Collider> toCheck = new List<Collider>(objects.OfType<Collider>());
+
+            for (int i = 0; i < toCheck.Count; i++)
             {
-                foreach (var b in objects.OfType<Collider>().Where(x => x.Active && !x.Destroyed).Where(x => x != a))
+                Collider collider = toCheck[i];
+                if (IsActive(collider) && ShouldProcess(collider))
                 {
-                    if (LayerSettings.ContainsKey(b.CollisionLayer) && LayerSettings[b.CollisionLayer].Any(x => x == a.CollisionLayer) && Physics.ShouldCollide(a.Transform, b.Transform))
+                    for (int j = 0; j < toCheck.Count; j++)
                     {
-                        a.Process(b);
-                        b.Process(a);
+                        if (IsActive(toCheck[j]) && LayerSettings[collider.CollisionLayer].Contains(toCheck[j].CollisionLayer))
+                        {
+                            if (Physics.ShouldCollide(collider.Transform, toCheck[j].Transform))
+                            {
+                                collider.Process(toCheck[j]);
+                                toCheck[j].Process(collider);
+                                toCheck.RemoveAt(i);
+                                toCheck.RemoveAt(j);
+                                break;
+                            }
+                        }
                     }
                 }
             }
+        }
+
+        private bool ShouldProcess(Collider collider)
+        {
+            return LayerSettings.ContainsKey(collider.CollisionLayer);
+        }
+
+        private bool IsActive(EngineObject engineObject)
+        {
+            return engineObject.Active && !engineObject.Destroyed;
         }
 
         public static bool AnyOverlaps(Vector2 point, float radius, Layer layerMask, out Vector2 hit)
