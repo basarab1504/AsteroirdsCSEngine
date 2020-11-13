@@ -30,7 +30,7 @@ namespace Asteroids
                         {
                             toCheck[i].Process(toCheck[j]);
                             toCheck[j].Process(toCheck[i]);
-                            toCheck.RemoveAt(j--);
+                            toCheck.RemoveAt(j);
                             break;
                         }
                     }
