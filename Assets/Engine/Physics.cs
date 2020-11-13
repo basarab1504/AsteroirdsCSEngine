@@ -20,24 +20,18 @@ namespace Asteroids
         {
             List<Collider> toCheck = new List<Collider>(objects.OfType<Collider>());
 
-            for (int i = 0; i < toCheck.Count; i++)
+            for (var i = 0; i < toCheck.Count; i++)
             {
-                Collider collider = toCheck[i];
-                if (IsActive(collider) && ShouldProcess(collider))
+                if (IsActive(toCheck[i]) && ShouldProcess(toCheck[i]))
                 {
-                    for (int j = 0; j < toCheck.Count; j++)
+                    for (var j = i + 1; j < toCheck.Count; j++)
                     {
-                        if (IsActive(toCheck[j]) && LayerSettings[collider.CollisionLayer].Contains(toCheck[j].CollisionLayer))
+                        if (IsActive(toCheck[j]) && LayerSettings[toCheck[i].CollisionLayer].Contains(toCheck[j].CollisionLayer) && Physics.ShouldCollide(toCheck[i].Transform, toCheck[j].Transform))
                         {
-                            if (Physics.ShouldCollide(collider.Transform, toCheck[j].Transform))
-                            {
-                                collider.Process(toCheck[j]);
-                                toCheck[j].Process(collider);
-                                toCheck.RemoveAt(i);
-                                toCheck.RemoveAt(j);
-                                i = 0;
-                                break;
-                            }
+                            toCheck[i].Process(toCheck[j]);
+                            toCheck[j].Process(toCheck[i]);
+                            toCheck.RemoveAt(j--);
+                            break;
                         }
                     }
                 }

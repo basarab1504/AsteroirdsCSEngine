@@ -60,7 +60,8 @@ public class UnityProxy : MonoBehaviour
         Physics.LayerSettings.Add(Layer.Player, new List<Layer>() { Layer.Asteroid, Layer.EnemyShip, Layer.BulletEnemy });
         Physics.LayerSettings.Add(Layer.EnemyShip, new List<Layer>() { Layer.Player, Layer.BulletPlayer });
         Physics.LayerSettings.Add(Layer.Asteroid, new List<Layer>() { Layer.BulletPlayer });
-        Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.BulletEnemy });
+        Physics.LayerSettings.Add(Layer.BulletPlayer, new List<Layer>() { Layer.Asteroid, Layer.BulletEnemy, Layer.EnemyShip });
+        Physics.LayerSettings.Add(Layer.BulletEnemy, new List<Layer>() { Layer.Player });
 
         CreateEnemyShipSpawner();
         CreateAsteroidSpawner();
