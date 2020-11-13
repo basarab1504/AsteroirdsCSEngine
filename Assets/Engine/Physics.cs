@@ -35,6 +35,7 @@ namespace Asteroids
                                 toCheck[j].Process(collider);
                                 toCheck.RemoveAt(i);
                                 toCheck.RemoveAt(j);
+                                i = 0;
                                 break;
                             }
                         }
