@@ -452,9 +452,9 @@ MonoBehaviour:
     Rotate
     right - D or Right Arrow
 
-    Shoot - Left Mouse Button
+    Shoot bullets - Left Mouse Button
 
-    Change ammo type
+    Shoot laser
     - Right Mouse Button'
 --- !u!222 &319502660
 CanvasRenderer:
